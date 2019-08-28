@@ -13,7 +13,12 @@ coverage](https://codecov.io/gh/LieberInstitute/sgejobs/branch/master/graph/badg
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of sgejobs is to …
+This package contains helper functions for Sun Grid Engine (SGE) cluster
+jobs, mostly with usage at the Joint High Performance Computing Exchange
+([JHPCE](https://jhpce.jhu.edu/)) cluster in mind. Please check the
+package [documentation
+website](http://LieberInstitute.github.io/sgejobs) for more information
+about how to use `sgejobs`.
 
 # Installation instructions
 
