@@ -227,9 +227,9 @@ working directory.</p>
 #&gt; #!/bin/bash
 #&gt; #$ -cwd
 #&gt; #$ -l mem_free=10G,h_vmem=10G,h_fsize=100G
-#&gt; #$ -N SHORT
-#&gt; #$ -o logs/SHORT.txt
-#&gt; #$ -e logs/SHORT.txt
+#&gt; #$ -N ${SHORT}
+#&gt; #$ -o logs/${SHORT}.txt
+#&gt; #$ -e logs/${SHORT}.txt
 #&gt; #$ -m e
 #&gt; 
 #&gt; echo "**** Job starts ****"
@@ -286,9 +286,9 @@ working directory.</p>
 #&gt; #$ -cwd
 #&gt; #$ -l mem_free=10G,h_vmem=10G,h_fsize=100G
 #&gt; #$ -pe local 5
-#&gt; #$ -N SHORT
-#&gt; #$ -o logs/SHORT.\$TASK_ID.txt
-#&gt; #$ -e logs/SHORT.\$TASK_ID.txt
+#&gt; #$ -N ${SHORT}
+#&gt; #$ -o logs/${SHORT}.\$TASK_ID.txt
+#&gt; #$ -e logs/${SHORT}.\$TASK_ID.txt
 #&gt; #$ -m e
 #&gt; #$ -t 1-10
 #&gt; #$ -tc 20

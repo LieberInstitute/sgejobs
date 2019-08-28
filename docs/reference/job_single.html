@@ -245,10 +245,11 @@ the options using <code>qalter</code>.</p>
 #&gt; echo "**** Job ends ****"
 #&gt; date
 #&gt; </div><div class='input'>
-<span class='co'>## A regular job with 10 cores</span>
-<span class='fu'>job_single</span>(<span class='st'>'jhpce_job'</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>create_logdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; #!/bin/bash
+<span class='co'>## A regular job with 10 cores on the 'imaginary' queue</span>
+<span class='fu'>job_single</span>(<span class='st'>'jhpce_job'</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>queue</span> <span class='kw'>=</span> <span class='st'>'imaginary'</span>,
+    <span class='kw'>create_logdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; #!/bin/bash
 #&gt; #$ -cwd
-#&gt; #$ -l mem_free=10G,h_vmem=10G,h_fsize=100G
+#&gt; #$ -l imaginary,mem_free=10G,h_vmem=10G,h_fsize=100G
 #&gt; #$ -pe local 10
 #&gt; #$ -N jhpce_job
 #&gt; #$ -o logs/jhpce_job.txt

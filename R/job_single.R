@@ -45,8 +45,9 @@
 #' ## A regular job
 #' job_single('jhpce_job', create_logdir = FALSE)
 #'
-#' ## A regular job with 10 cores
-#' job_single('jhpce_job', cores = 10, create_logdir = FALSE)
+#' ## A regular job with 10 cores on the 'imaginary' queue
+#' job_single('jhpce_job', cores = 10, queue = 'imaginary',
+#'     create_logdir = FALSE)
 #'
 #' ## An array job
 #' job_single('jhpce_job_array', task_num = 20, create_logdir = FALSE)
