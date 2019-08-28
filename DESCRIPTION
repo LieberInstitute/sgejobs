@@ -13,3 +13,5 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/LieberInstitute/sgejobs
 BugReports: https://github.com/LieberInstitute/sgejobs/issues
+Suggests: 
+    covr
