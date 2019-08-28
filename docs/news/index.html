@@ -120,6 +120,10 @@
 <a href="#sgejobs-0-99-0" class="anchor"></a>sgejobs 0.99.0</h1>
 <ul>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Added the functions <code><a href="../reference/parse_task_ids.html">parse_task_ids()</a></code> and <code><a href="../reference/parse_task_ids.html">parse_task_ids_builder()</a></code> for parsing SGE task IDs.</li>
+<li>Added the function <code><a href="../reference/resubmit_array.html">resubmit_array()</a></code> for re-submitting an SGE array job for a given set of input task IDs.</li>
+<li>Added the function <code><a href="../reference/job_single.html">job_single()</a></code> for creating a shell file for a new job that can be submitted using <code>qsub</code>.</li>
+<li>Added the function <code><a href="../reference/job_loop.html">job_loop()</a></code> for creating a function that loops through a bash variable(s) to create shell scripts that are then submitted to SGE using <code>qsub</code>.</li>
 </ul>
 </div>
   </div>
