@@ -37,24 +37,19 @@ cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
 # https://github.com/cboettig/knitcitations/issues/63
 
 ## Write bibliography information
-bibs <- c(
+bib <- c(
     BiocStyle = citation('BiocStyle'),
     sgejobs = citation('sgejobs'),
     knitcitations = citation('knitcitations'),
     knitr = citation('knitr')[3],
     R = citation(),
     remotes = citation('remotes'),
-    rmarkdown = citation('rmarkdown'),
+    rmarkdown = citation('rmarkdown')[1],
     sessioninfo = citation('sessioninfo'),
     testthat = citation('testthat')
 )
 
-write.bibtex(bibs,
-    file = 'basics.bib')
-bib <- read.bibtex('basics.bib')
-
-## Assign short names
-names(bib) <- names(bibs)
+write.bibtex(bib, file = 'basics.bib')
 ```
 
 
