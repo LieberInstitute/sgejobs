@@ -1,0 +1,158 @@
+---
+title: "Introduction to sgejobs"
+author: 
+  - name: Leonardo Collado-Torres
+    affiliation:
+    - &libd Lieber Institute for Brain Development, Johns Hopkins Medical Campus
+    - &ccb Center for Computational Biology, Johns Hopkins University
+    email: lcolladotor@gmail.com
+date: "`r doc_date()`"
+package: "`r pkg_ver('sgejobs')`"
+output: 
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to sgejobs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## Track time spent on making the vignette
+startTime <- Sys.time()
+
+## Bib setup
+library('knitcitations')
+
+## Load knitcitations with a clean bibliography
+cleanbib()
+cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
+# Note links won't show for now due to the following issue
+# https://github.com/cboettig/knitcitations/issues/63
+
+## Write bibliography information
+bibs <- c(
+    BiocStyle = citation('BiocStyle'),
+    sgejobs = citation('sgejobs'),
+    knitcitations = citation('knitcitations'),
+    knitr = citation('knitr')[3],
+    R = citation(),
+    remotes = citation('remotes'),
+    rmarkdown = citation('rmarkdown'),
+    sessioninfo = citation('sessioninfo'),
+    testthat = citation('testthat')
+)
+
+write.bibtex(bibs,
+    file = 'basics.bib')
+bib <- read.bibtex('basics.bib')
+
+## Assign short names
+names(bib) <- names(bibs)
+```
+
+
+# Basics
+
+## Install `r Githubpkg('LieberInstitute/sgejobs')`
+
+`R` is an open-source statistical environment which can be easily modified to enhance its functionality via packages. `r Githubpkg('LieberInstitute/sgejobs')` is a `R` package available via GitHub. `R` can be installed on any operating system from [CRAN](https://cran.r-project.org/) after which you can install `r Githubpkg('LieberInstitute/sgejobs')` by using the following commands in your `R` session:
+
+```{r 'installpkg', eval = FALSE}
+if (!requireNamespace("remotes", quietly = TRUE))
+   install.packages("remotes")
+
+remotes::install_github('LieberInstitute/sgejobs')
+```
+
+
+## Asking for help
+
+As package developers, we try to explain clearly how to use our packages and in which order to use the functions. But `R` and `JHPCE/SGE` have a steep learning curve so it is critical to learn where to ask for help. For JHPCE questions, please use check the [JHPCE help page](https://jhpce.jhu.edu/contact/). For `r Githubpkg('LieberInstitute/sgejobs')` please post issues in GitHub. However, please note that if you want to receive help you should adhere to the [posting guidelines](http://www.bioconductor.org/help/support/posting-guide/). It is particularly critical that you provide a small reproducible example and your session information so package developers can track down the source of the error.
+
+## Citing `r Githubpkg('LieberInstitute/sgejobs')`
+
+We hope that `r Githubpkg('LieberInstitute/sgejobs')` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+
+```{r 'citation'}
+## Citation info
+citation('sgejobs')
+```
+
+# Overview
+
+`r Githubpkg('LieberInstitute/sgejobs')` is TODO
+
+```{r 'intro'}
+library('sgejobs')
+```
+
+
+# Reproducibility
+
+The `r Githubpkg('LieberInstitute/sgejobs')` package `r citep(bib[['sgejobs']])` was made possible thanks to:
+
+* R `r citep(bib[['R']])`
+* `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
+* `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
+* `r CRANpkg('remotes')` `r citep(bib[['remotes']])`
+* `r CRANpkg('rmarkdown')` `r citep(bib[['rmarkdown']])`
+* `r CRANpkg('sessioninfo')` `r citep(bib[['sessioninfo']])`
+* `r CRANpkg('testthat')` `r citep(bib[['testthat']])`
+
+
+Code for creating the vignette
+
+```{r createVignette, eval=FALSE}
+## Create the vignette
+library('rmarkdown')
+system.time(render('sgejobs-quickstart.Rmd', 'BiocStyle::html_document'))
+
+## Extract the R code
+library('knitr')
+knit('sgejobs-quickstart.Rmd', tangle = TRUE)
+```
+
+Date the vignette was generated.
+
+```{r reproduce1, echo=FALSE}
+## Date the vignette was generated
+Sys.time()
+```
+
+Wallclock time spent generating the vignette.
+
+```{r reproduce2, echo=FALSE}
+## Processing time in seconds
+totalTime <- diff(c(startTime, Sys.time()))
+round(totalTime, digits=3)
+```
+
+`R` session information.
+
+```{r reproduce3, echo=FALSE}
+## Session info
+library('sessioninfo')
+options(width = 120)
+session_info()
+```
+
+# Bibliography
+
+This vignette was generated using `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
+with `r CRANpkg('knitr')` `r citep(bib[['knitr']])` and `r CRANpkg('rmarkdown')` `r citep(bib[['rmarkdown']])` running behind the scenes.
+
+Citations made with `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`.
+
+```{r vignetteBiblio, results = 'asis', echo = FALSE, warning = FALSE, message = FALSE}
+## Print bibliography
+bibliography()
+```
+
+Download the [bibliography](basics.bib) file.

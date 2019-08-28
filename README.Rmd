@@ -17,39 +17,34 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/LieberInstitute/sgejobs.svg?branch=master)](https://travis-ci.org/LieberInstitute/sgejobs)
 [![Codecov test coverage](https://codecov.io/gh/LieberInstitute/sgejobs/branch/master/graph/badge.svg)](https://codecov.io/gh/LieberInstitute/sgejobs?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of sgejobs is to ...
 
-## Installation
+# Installation instructions
 
-You can install the released version of sgejobs from [CRAN](https://CRAN.R-project.org) with:
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then install `sgejobs` using the following code:
 
-``` r
-install.packages("sgejobs")
+```{r, eval = FALSE}
+## If needed:
+if (!requireNamespace("remotes", quietly = TRUE))
+   install.packages("remotes")
+
+## Install with:
+remotes::install_github('LieberInstitute/sgejobs')
 ```
 
-## Example
 
-This is a basic example which shows you how to solve a common problem:
+# Citation
 
-```{r example}
-library(sgejobs)
-## basic example code
+Below is the citation output from using `citation('sgejobs')` in R. Please 
+run this yourself to check for any updates on how to cite __sgejobs__.
+
+```{r 'citation'}
+citation('sgejobs')
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+# Testing
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+Testing on Bioc-devel is feasible thanks to [R Travis](http://docs.travis-ci.com/user/languages/r/).
