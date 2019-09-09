@@ -23,13 +23,13 @@ for SGE job identifier.
 \examples{
 
 ## Example log file
-bsp2_log <- system.file('inst', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
+bsp2_log <- system.file('extdata', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
 
 ## Find the job id
 log_jobid(bsp2_log)
 
 ## Another example log file
-twas_gene_HIPPO <- system.file('inst', 'logs',
+twas_gene_HIPPO <- system.file('extdata', 'logs',
     'compute_weights_full_HIPPO_gene.1.txt', package = 'sgejobs')
 
 ## Id for the second example
