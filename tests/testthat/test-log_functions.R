@@ -1,7 +1,7 @@
 context('log functions')
 
-bsp2_log <- system.file('inst', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
-twas_gene_HIPPO <- system.file('inst', 'logs',
+bsp2_log <- system.file('extdata', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
+twas_gene_HIPPO <- system.file('extdata', 'logs',
     'compute_weights_full_HIPPO_gene.1.txt', package = 'sgejobs')
 
 
