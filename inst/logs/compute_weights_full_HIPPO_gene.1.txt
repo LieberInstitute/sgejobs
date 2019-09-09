@@ -1,0 +1,30 @@
+Loading git
+Adding LIBD modules
+**** Job starts ****
+Mon Aug 12 16:35:41 EDT 2019
+**** JHPCE info ****
+User: lcollado
+Job id: 7751602
+Job name: compute_weights_full_HIPPO_gene
+Hostname: compute-099
+Task id: 1
+Loading LIBD module for plink/1.90b6.6
+Loading LIBD module for fusion_twas/github
+Loading LIBD module for plink/1.90b6.6
+Loading LIBD module for plink/1.90b6.6
+See /jhpce/shared/jhpce/libd/fusion_twas/github/README.md for installing the R dependencies
+Run using the full path, for example: Rscript /jhpce/shared/jhpce/libd/fusion_twas/github/fusion_twas/FUSION.compute_weights.R --help
+
+Currently Loaded Modules:
+  1) JHPCE_DEFAULT_ENV   5) COMMUNITY_DEFAULT_ENV   9) git/2.17.0
+  2) matlab/R2017b       6) sge/2011.11p1          10) fusion_twas/github
+  3) stata/16            7) conda_R/3.5.x          11) plink/1.90b6.6
+  4) JHPCE_tools/1.0     8) gcc/4.4.7
+
+
+
+### Estimating heritability
+Heritability (se): -0.00561 0.002625 LRT P-value: 0.2039
+tmp_files/gene_1 : heritability -0.00561; LRT P-value 0.2039 : skipping gene
+**** Job ends ****
+Mon Aug 12 16:35:46 EDT 2019

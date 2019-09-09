@@ -10,3 +10,5 @@ that can be submitted using `qsub`.
 * Added the function `job_loop()` for creating a function that loops through
 a bash variable(s) to create shell scripts that are then submitted to SGE using
 `qsub`.
+* Added the functions `log_date()` and `log_jobid()` to find the start/end
+date from an SGE log file as well as the job id.

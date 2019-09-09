@@ -1,0 +1,27 @@
+Adding LIBD modules
+Loading git
+Loading LIBD module for git-status-size/github
+loading rmate
+Loading LIBD module for rmate/1.5.9
+Loading LIBD module for ruby/2.6.4p104
+**** Job starts ****
+Sat Sep  7 14:40:21 EDT 2019
+**** JHPCE info ****
+User: lcollado
+Job id: 92500
+Job name: delete_bsp2
+Hostname: compute-089.cm.cluster
+Task id: undefined
+
+Currently Loaded Modules:
+  1) matlab/R2019a                   7) JHPCE_CENTOS7_DEFAULT_ENV
+  2) stata/16                        8) git/2.17.0
+  3) JHPCE_tools/1.0                 9) git-status-size/github
+  4) sge/8.1.9                      10) ruby/2.6.4p104
+  5) gcc/4.4.7                      11) rmate/1.5.9
+  6) COMMUNITY_CENTOS7_DEFAULT_ENV
+
+
+
+**** Job ends ****
+Sat Sep  7 14:40:59 EDT 2019

@@ -13,7 +13,7 @@ coverage](https://codecov.io/gh/LieberInstitute/sgejobs/branch/master/graph/badg
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-This package contains helper functions for Sun Grid Engine (SGE) cluster
+This package contains helper functions for Son of Grid Engine (SGE) cluster
 jobs, mostly with usage at the Joint High Performance Computing Exchange
 ([JHPCE](https://jhpce.jhu.edu/)) cluster in mind. Please check the
 package [documentation

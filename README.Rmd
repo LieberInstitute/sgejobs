@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-This package contains helper functions for Sun Grid Engine (SGE) cluster jobs, mostly with usage at the Joint High Performance Computing Exchange ([JHPCE](https://jhpce.jhu.edu/)) cluster in mind. Please check the package [documentation website](http://LieberInstitute.github.io/sgejobs) for more information about how to use `sgejobs`.
+This package contains helper functions for [Son Grid Engine](https://arc.liv.ac.uk/trac/SGE) (SGE) cluster jobs, mostly with usage at the Joint High Performance Computing Exchange ([JHPCE](https://jhpce.jhu.edu/)) cluster in mind. Please check the package [documentation website](http://LieberInstitute.github.io/sgejobs) for more information about how to use `sgejobs`.
 
 # Installation instructions
 

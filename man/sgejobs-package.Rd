@@ -7,8 +7,8 @@
 \title{sgejobs: Helper functions for SGE jobs at JHPCE}
 \description{
 This package contains helper functions for interacting with the
-    JHPCE cluster https://jhpce.jhu.edu/ which is uses Sun Grid Engine (SGE) for
-    managing the cluster jobs.
+    JHPCE cluster https://jhpce.jhu.edu/ which is uses Son of Grid Engine (SGE)
+    for managing the cluster jobs.
 }
 \seealso{
 Useful links:

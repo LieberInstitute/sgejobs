@@ -89,7 +89,6 @@ job_loop <- function(
     ## Build the core script
     script <- job_single(
         name = '{SHORT}',
-        create_shell = create_shell,
         queue = queue,
         memory = memory,
         cores = cores,

@@ -54,7 +54,7 @@ specified then it also creates the actual script in the current
 working directory.
 }
 \description{
-This function builds a template for a Sun Grid Ending (SGE) job script
+This function builds a template for a Son of Grid Ending (SGE) job script
 including array jobs. Check this blog post by John Muschelli to learn
 more about array jobs:
 \url{https://hopstat.wordpress.com/2013/11/05/array-and-sequential-cluster-jobs/}.
