@@ -1,7 +1,7 @@
-#' Re-submit tasks that failed for an array job
+#' Submit an array job with a specified set of task IDs
 #'
 #' Given a bash script that specifies the SGE option -t (that is, an array job),
-#' this function re-submits that job using `qsub` for a given list of task
+#' this function submits that job using `qsub` for a given list of task
 #' IDs. This function is useful in case some tasks for a given job failed which
 #' you can find using `qstat | grep Eqw` or other options.
 #'
@@ -21,7 +21,7 @@
 #' @examples
 #'
 #' ## Choose a script name
-#' job_name <- paste0('resubmit_array_example_', Sys.Date())
+#' job_name <- paste0('array_submit_example_', Sys.Date())
 #'
 #' ## Create an array job on the temporary directory
 #' with_wd(tempdir(), {
@@ -32,15 +32,16 @@
 #'         task_num = 100
 #'     )
 #'
-#'     ## Now we can re-submit the SGE job for a set of task IDs
-#'     resubmit_array(
+#'     ## Now we can submit the SGE job for a set of task IDs
+#'     array_submit(
 #'         job_bash = paste0(job_name, '.sh'),
 #'         task_ids = '225019-225038:1,225040,225043'
 #'     )
 #'
 #' })
 #'
-resubmit_array <- function(job_bash, task_ids, submit = !is_travis(), restore = TRUE) {
+array_submit <- function(job_bash, task_ids, submit = !is_travis(),
+    restore = TRUE) {
     ## Check that the script is local, in case the script uses -cwd
     if(basename(job_bash) != job_bash) {
         stop(

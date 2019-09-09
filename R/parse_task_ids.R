@@ -8,8 +8,8 @@
 #' @param task_ids Either a character vector taken from the `qstat` output
 #' or with a numeric input.
 #'
-#' @return A character vector with SGE-ready task ids to re-submit using
-#' [resubmit_array].
+#' @return A character vector with SGE-ready task ids to submit using
+#' [array_submit].
 #' @author Leonardo Collado-Torres
 #' @export
 #'

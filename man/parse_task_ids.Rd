@@ -17,8 +17,8 @@ or with a numeric input.}
 yet.}
 }
 \value{
-A character vector with SGE-ready task ids to re-submit using
-\link{resubmit_array}.
+A character vector with SGE-ready task ids to submit using
+\link{array_submit}.
 }
 \description{
 This function takes either a character vector or a numeric one as input.

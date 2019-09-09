@@ -1,5 +1,5 @@
 ## Choose a script name
-job_name <- paste0('resubmit_array_test_', Sys.Date())
+job_name <- paste0('array_submit_test_', Sys.Date())
 
 
 run_test <- function(restore) {
@@ -17,8 +17,8 @@ run_test <- function(restore) {
 
         original <- readLines(paste0(job_name, '.sh'))
 
-        ## Now we can re-submit the SGE job for a set of task IDs
-        resubmit_array(
+        ## Now we can submit the SGE job for a set of task IDs
+        array_submit(
             job_bash = paste0(job_name, '.sh'),
             task_ids = '225019-225038:1,225040,225043',
             submit = !restore,
@@ -54,8 +54,8 @@ run_test_break <- function(restore) {
         ## Break the original script
         writeLines(original[-grep('#$ -t', original)], paste0(job_name, '.sh'))
 
-        ## Now we can re-submit the SGE job for a set of task IDs
-        resubmit_array(
+        ## Now we can submit the SGE job for a set of task IDs
+        array_submit(
             job_bash = paste0(job_name, '.sh'),
             task_ids = '225019-225038:1,225040,225043',
             submit = !restore,
@@ -64,12 +64,12 @@ run_test_break <- function(restore) {
     })
 }
 
-test_that('resubmitt_array', {
+test_that('array_submit', {
     expect_equal(test1$original, test1$final)
     expect_equal(test2$original[-t_line], test2$final[-t_line])
     expect_equal(test2$final[t_line], '#$ -t 225043-225043')
     expect_error(
-        resubmit_array(file.path(tempdir(), paste0(job_name, '.sh')), '1'),
+        array_submit(file.path(tempdir(), paste0(job_name, '.sh')), '1'),
         'script has to exist in the current working directory'
     )
     expect_error(run_test_break(FALSE),
