@@ -47,6 +47,7 @@ bib <- c(
     pryr = citation('pryr'),
     purrr = citation('purrr'),
     R = citation(),
+    readr = citation('readr'),
     remotes = citation('remotes'),
     rmarkdown = citation('rmarkdown')[1],
     sessioninfo = citation('sessioninfo'),
@@ -254,6 +255,7 @@ The `r Githubpkg('LieberInstitute/sgejobs')` package `r citep(bib[['sgejobs']])`
 * `r CRANpkg('pryr')` `r citep(bib[['pryr']])`
 * `r CRANpkg('purrr')` `r citep(bib[['purrr']])`
 * `r CRANpkg('remotes')` `r citep(bib[['remotes']])`
+* `r CRANpkg('readr')` `r citep(bib[['readr']])`
 * `r CRANpkg('rmarkdown')` `r citep(bib[['rmarkdown']])`
 * `r CRANpkg('sessioninfo')` `r citep(bib[['sessioninfo']])`
 * `r CRANpkg('testthat')` `r citep(bib[['testthat']])`

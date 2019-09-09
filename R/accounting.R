@@ -77,6 +77,7 @@ accounting_read <- function(job_ids) {
 #' @export
 #' @import tidyr lubridate purrr
 #' @importFrom pryr bytes
+#' @importFrom readr type_convert
 #'
 #' @rdname accounting
 #' @references

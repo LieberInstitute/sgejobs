@@ -36,4 +36,5 @@ Imports:
     glue,
     lubridate,
     tidyr,
-    pryr
+    pryr,
+    readr
