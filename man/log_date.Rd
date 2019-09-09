@@ -2,7 +2,7 @@
 % Please edit documentation in R/log_date.R
 \name{log_date}
 \alias{log_date}
-\title{From a SGE log file, find the start and end times}
+\title{From a SGE log file, find the SGE start and end times}
 \usage{
 log_date(log_file, tz = "EST", date_lines = c("Job starts",
   "Job ends"))

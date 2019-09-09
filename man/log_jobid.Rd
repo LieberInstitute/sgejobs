@@ -2,7 +2,7 @@
 % Please edit documentation in R/log_jobid.R
 \name{log_jobid}
 \alias{log_jobid}
-\title{From a SGE log file, find the job id}
+\title{From a SGE log file, find the SGE job ID}
 \usage{
 log_jobid(log_file, jobid_header = "Job id:")
 }

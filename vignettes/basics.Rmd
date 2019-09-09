@@ -87,11 +87,159 @@ citation('sgejobs')
 
 # Overview
 
-`r Githubpkg('LieberInstitute/sgejobs')` is TODO
+The package `r Githubpkg('LieberInstitute/sgejobs')` contains a few helper functions for those of you interacting with a [Son of Grid Engine](https://arc.liv.ac.uk/trac/SGE)^[The open-source version of Sun Grid Engine.] high-performance computing cluster such as [JHPCE](https://jhpce.jhu.edu/). 
+
+To start off, load the package.
 
 ```{r 'intro'}
 library('sgejobs')
 ```
+
+## Creating SGE job `bash` scripts
+
+At this point, if you are starting from stratch you might want to create a `bash` script for submitting an SGE job. For this purpose, `r Githubpkg('LieberInstitute/sgejobs')` contains two functions that help you build either a single SGE job (could be an array job) or a script that loops through some variables and creates SGE bash scripts. These are [`job_single()`](../articles/job_single.html) and [`job_loop()`](../articles/job_loop.html).
+
+
+[`job_single()`](../articles/job_single.html) specifies many arguments that control common SGE job options such as the number of cores, the cluster queue, and memory requirements. Note that the resulting `bash` script contains some information that can be useful for reproducibility purposes such as the SGE job ID, the compute node it ran on, the list of modules loaded by the user, etc.
+
+```{r 'single'}
+## job_single() builds a template bash script for a single job
+job_single('jhpce_job', create_logdir = FALSE)
+
+## if you specify task_num then it becomes an array job
+job_single('jhpce_array_job', create_logdir = FALSE, task_num = 20)
+```
+
+[`job_loop()`](../articles/job_loop.html) is a little bit more complicated since you have to specify the `loops` named list argument. The `loops` argument specifies the `bash` variable names and values to loop through for creating a series of `bash` scripts that will get submitted to SGE. This type of `bash` script is something we use frequently, for example in the [`compute_weights.sh`](https://github.com/LieberInstitute/brainseq_phase2/blob/master/twas/compute_weights.sh) script `r citep('doi.org/10.1016/j.neuron.2019.05.013')`. This type of script generator I believe is something [Alyssa Frazee](http://alyssafrazee.com/) taught me back in the day which you can see in some old repositories such as [`leekgroup/derSoftware`](https://github.com/leekgroup/derSoftware). Besides the `loops` argument, [`job_loop()`](../articles/job_loop.html) shares most of the options with [`job_single()`](../articles/job_single.html).
+
+```{r 'loop'}
+job_loop(
+    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jx')),
+    name = 'bsp2_test'
+)
+```
+
+## Submitting SGE jobs
+
+Once you fine-tune your SGE `bash` script, you can submit it with `qsub`. `r Githubpkg('LieberInstitute/sgejobs')` also contains some helper functions for a few different scenarios.
+
+To start off, [`array_submit()`](../articles/array_submit.html) can take a local `bash` script and submit it for you. However, the need for it becomes more apparent when multiple tasks for an SGE array job fail. You can detect tasks that failed using `qstat | grep Eqw` or similar SGE commands. To build a vector of tasks that you need to re-run, [`parse_task_ids()`](../articles/parse_task_ids.html) will be helpful.
+
+```{r 'parse_ids'}
+## This is an example true output from "qstat | grep Eqw"
+## 7770638 0.50105 compute_we lcollado     Eqw   08/16/2019 14:57:25                                    1 225001-225007:1,225009-225017:2,225019-225038:1,225040,225043,225047,225049
+## parse_task_ids() can then take as input the list of task ids that failed
+task_ids <- parse_task_ids('225001-225007:1,225009-225017:2,225019-225038:1,225040,225043,225047,225049')
+task_ids
+```
+
+Next, you can re-submit those task ids for the given SGE `bash` script that failed using [`array_submit()`](../articles/array_submit.html). While in this example we are explicitely providing the output of [`parse_task_ids()`](../articles/parse_task_ids.html) to [`array_submit()`](../articles/array_submit.html), it is not neccessary since [`parse_task_ids()`](../articles/parse_task_ids.html) is used internally by [`array_submit()`](../articles/array_submit.html).
+
+```{r 're-submit'}
+## Choose a script name
+job_name <- paste0('array_submit_example_', Sys.Date())
+
+## Create an array job on the temporary directory
+with_wd(tempdir(), {
+    ## Create an array job script to use for this example
+    job_single(
+        name = job_name,
+        create_shell = TRUE,
+        task_num = 100
+    )
+
+    ## Now we can submit the SGE job for a set of task IDs
+    array_submit(
+        job_bash = paste0(job_name, '.sh'),
+        task_ids = task_ids,
+        submit = FALSE
+    )
+
+})
+```
+
+Another scenario that you might run when submitting SGE array jobs is that there is a limit on the number of tasks a job can have. For example, at JHPCE that limit is 75,000. If you have a job with 150,000 tasks, you could submit first a job for tasks 1 till 75,000 then a second one for 75,001 to 150,000. However, to simplify this process, [`array_submit_num()`](../articles/array_submit_num.html) does this for you.
+
+```{r 'array_submit_num'}
+## Choose a script name
+job_name <- paste0('array_submit_num_example_', Sys.Date())
+
+## Create an array job on the temporary directory
+with_wd(tempdir(), {
+    ## Create an array job script to use for this example
+    job_single(
+        name = job_name,
+        create_shell = TRUE,
+        task_num = 1
+    )
+
+    ## Now we can submit the SGE job for a given number of tasks
+    array_submit_num(
+        job_bash = paste0(job_name, '.sh'),
+        array_num = 150000,
+        submit = FALSE
+    )
+
+})
+```
+
+
+## SGE job log files and accounting
+
+If you built your SGE job `bash` scripts using the functions from this package, you can extract information from the log files such as the date when the job started and ended as well as the SGE job ID. These two pieces of information can be extracted using [`log_date()`](../articles/log_date.html) and [`log_jobid()`](../articles/log_jobid.html) as shown below:
+
+```{r 'loginfo'}
+## Example log file
+bsp2_log <- system.file('extdata', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
+
+## Find start/end dates
+log_date(bsp2_log)
+
+## Find job id
+log_jobid(bsp2_log)
+```
+The idea was that these two functions along with a third function that is yet to be implemented would help you find the accounting file for a given SGE job, such that you could extract the accounting information using `qacct` from that given file. For example, `qacct -f /cm/shared/apps/sge/var/default/common/accounting_20170703_0300.txt -j 1526131`. However, at JHPCE since the upgrade to CentOS v7 this might no longer be necessary.
+
+In any case, once you have the SGE job id (be it an array job or not), you can extract the information using the [`accounting()`](../articles/accounting.html) functions. Since some require that `qacct` be available on your system, we split the code into functions that read the data and parse it.
+
+```{r 'accounting'}
+## If you are at JHPCE you can run this:
+if(FALSE) {
+  accounting(c('92500', '77672'))
+}
+
+## However, if you are not at JHPCE, we included some example data
+
+# Here we use the data included in the package to avoid depending on JHPCE
+## where the data for job 77672 has been subset for the first two tasks.
+accounting_info <- list(
+    '92500' = readLines(system.file('extdata', 'accounting', '92500.txt',
+        package = 'sgejobs')),
+    '77672' = readLines(system.file('extdata', 'accounting', '77672.txt',
+        package = 'sgejobs'))
+)
+
+## Here we parse the data from `qacct` into a data.frame
+res <- accounting_parse(accounting_info)
+res
+
+## Check the maximum memory use
+res$maxvmem
+
+## The minimum memory (from the maxvmem) used
+pryr:::show_bytes(min(res$maxvmem))
+
+## And the absolute maximum
+pryr:::show_bytes(max(res$maxvmem))
+```
+
+The [`accounting()`](../articles/accounting.html) functions will work for array jobs as well as regular jobs which can be helpful to identify if some tasks are failing (`exit_status` other than 0) as well as their maximum memory use. From these functions you can store more information about your SGE jobs than the one you get from the automatic emails (`#$ -m e`).
+
+
+## Conclusions
+
+We hope that the functions in `r Githubpkg('LieberInstitute/sgejobs')` will make your work more reprocible and your life easier in terms of interacting with SGE. If you think of other potential use cases for `r Githubpkg('LieberInstitute/sgejobs')` please let us know. Also note that you might be interested in `r Githubpkg('muschellij2/clusterRundown')` written by John Muschelli for getting a rundown of cluster resources through `qstat`, `qmem`, `qhost` as well as `qacct`.
+
 
 
 # Reproducibility

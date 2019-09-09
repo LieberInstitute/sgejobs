@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build a SGE job script — job_single • sgejobs</title>
+<title>Build a SGE job bash script — job_single • sgejobs</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Build a SGE job script — job_single" />
+<meta property="og:title" content="Build a SGE job bash script — job_single" />
 <meta property="og:description" content="This function builds a template for a Son of Grid Ending (SGE) job script
 including array jobs. Check this blog post by John Muschelli to learn
 more about array jobs:
@@ -123,7 +123,7 @@ https://hopstat.wordpress.com/2013/11/05/array-and-sequential-cluster-jobs/." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build a SGE job script</h1>
+    <h1>Build a SGE job bash script</h1>
     <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/job_single.R'><code>R/job_single.R</code></a></small>
     <div class="hidden name"><code>job_single.Rd</code></div>
     </div>
@@ -238,6 +238,9 @@ the options using <code>qalter</code>.</p>
 #&gt; echo "Hostname: ${HOSTNAME}"
 #&gt; echo "Task id: ${SGE_TASK_ID}"
 #&gt; 
+#&gt; ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
+#&gt; module load conda_R
+#&gt; 
 #&gt; ## List current modules for reproducibility
 #&gt; module list
 #&gt; 
@@ -268,6 +271,9 @@ the options using <code>qalter</code>.</p>
 #&gt; echo "Hostname: ${HOSTNAME}"
 #&gt; echo "Task id: ${SGE_TASK_ID}"
 #&gt; 
+#&gt; ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
+#&gt; module load conda_R
+#&gt; 
 #&gt; ## List current modules for reproducibility
 #&gt; module list
 #&gt; 
@@ -297,6 +303,9 @@ the options using <code>qalter</code>.</p>
 #&gt; echo "Job name: ${JOB_NAME}"
 #&gt; echo "Hostname: ${HOSTNAME}"
 #&gt; echo "Task id: ${SGE_TASK_ID}"
+#&gt; 
+#&gt; ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
+#&gt; module load conda_R
 #&gt; 
 #&gt; ## List current modules for reproducibility
 #&gt; module list

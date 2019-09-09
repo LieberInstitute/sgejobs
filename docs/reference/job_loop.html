@@ -245,6 +245,9 @@ working directory.</p>
 #&gt; echo "Hostname: \${HOSTNAME}"
 #&gt; echo "Task id: \${SGE_TASK_ID}"
 #&gt; 
+#&gt; ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
+#&gt; module load conda_R
+#&gt; 
 #&gt; ## List current modules for reproducibility
 #&gt; module list
 #&gt; 
@@ -305,6 +308,9 @@ working directory.</p>
 #&gt; echo "Job name: \${JOB_NAME}"
 #&gt; echo "Hostname: \${HOSTNAME}"
 #&gt; echo "Task id: \${SGE_TASK_ID}"
+#&gt; 
+#&gt; ## Load the R module (absent since the JHPCE upgrade to CentOS v7)
+#&gt; module load conda_R
 #&gt; 
 #&gt; ## List current modules for reproducibility
 #&gt; module list

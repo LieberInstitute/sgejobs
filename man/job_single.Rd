@@ -2,7 +2,7 @@
 % Please edit documentation in R/job_single.R
 \name{job_single}
 \alias{job_single}
-\title{Build a SGE job script}
+\title{Build a SGE job bash script}
 \usage{
 job_single(name, create_shell = FALSE, queue = "shared",
   memory = "10G", cores = 1L, email = "e", logdir = "logs",
