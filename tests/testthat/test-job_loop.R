@@ -36,7 +36,7 @@ test_that("job_loop", {
         loops = list('a' = letters))), integer(0))
     expect_equal(grepl('#\\$ -l bluejay,',
         run_test(queue = ' bluejay ', create_shell = TRUE,
-            loops = list('a' = letters))), TRUE)
+            loops = list('a' = letters[1:5], 'b' = letters[6:10]))), TRUE)
     expect_error(run_test(FALSE, create_shell = TRUE,
         loops = list('a' = letters)), 'already exists!')
 })
