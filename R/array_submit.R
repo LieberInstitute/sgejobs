@@ -35,7 +35,8 @@
 #'     ## Now we can submit the SGE job for a set of task IDs
 #'     array_submit(
 #'         job_bash = paste0(job_name, '.sh'),
-#'         task_ids = '225019-225038:1,225040,225043'
+#'         task_ids = '225019-225038:1,225040,225043',
+#'         submit = FALSE
 #'     )
 #'
 #' })

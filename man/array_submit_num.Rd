@@ -58,7 +58,8 @@ with_wd(tempdir(), {
     ## Now we can submit the SGE job for a given number of tasks
     array_submit_num(
         job_bash = paste0(job_name, '.sh'),
-        array_num = 75001
+        array_num = 75001,
+        submit = FALSE
     )
 
 })
@@ -70,4 +71,7 @@ task_ids_num(75000)
 task_ids_num(75001)
 task_ids_num(150001)
 
+}
+\author{
+Leonardo Collado-Torres
 }

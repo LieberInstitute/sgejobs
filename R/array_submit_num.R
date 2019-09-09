@@ -16,6 +16,7 @@
 #' @return `array_submit_num`: Uses [array_submit()] to submit an array job for
 #' a given number of tasks as determined by [task_ids_num()].
 #' @export
+#' @author Leonardo Collado-Torres
 #'
 #' @examples
 #'
@@ -34,7 +35,8 @@
 #'     ## Now we can submit the SGE job for a given number of tasks
 #'     array_submit_num(
 #'         job_bash = paste0(job_name, '.sh'),
-#'         array_num = 75001
+#'         array_num = 75001,
+#'         submit = FALSE
 #'     )
 #'
 #' })
@@ -52,6 +54,7 @@ array_submit_num <- function(job_bash, array_num, submit = !is_travis(),
 #' @export
 #' @return `task_ids_num`: A character vector of SGE task IDs compliant with
 #' `array_max`.
+#'
 #'
 #' @examples
 #'

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if on Travis CI — is_travis • sgejobs</title>
+<title>From a SGE log file, find the start and end times — log_date • sgejobs</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,10 @@
 
 
 
-<meta property="og:title" content="Check if on Travis CI — is_travis" />
-<meta property="og:description" content="Simple check for Travis CI for examples" />
+<meta property="og:title" content="From a SGE log file, find the start and end times — log_date" />
+<meta property="og:description" content="This function searches a log file, such as those created with job_single(),
+for the start and end dates for the SGE job. This information can then be
+used to find the qacct file to retrieve information about the job at hand." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,39 +122,76 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if on Travis CI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/is_travis.R'><code>R/is_travis.R</code></a></small>
-    <div class="hidden name"><code>is_travis.Rd</code></div>
+    <h1>From a SGE log file, find the start and end times</h1>
+    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/log_date.R'><code>R/log_date.R</code></a></small>
+    <div class="hidden name"><code>log_date.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simple check for Travis CI for examples</p>
+    <p>This function searches a log file, such as those created with <code><a href='job_single.html'>job_single()</a></code>,
+for the start and end dates for the SGE job. This information can then be
+used to find the <code>qacct</code> file to retrieve information about the job at hand.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_travis</span>()</pre>
+    <pre class="usage"><span class='fu'>log_date</span>(<span class='no'>log_file</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"EST"</span>, <span class='kw'>date_lines</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Job starts"</span>,
+  <span class='st'>"Job ends"</span>))</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>log_file</th>
+      <td><p>The path to a SGE log file.</p></td>
+    </tr>
+    <tr>
+      <th>tz</th>
+      <td><p>Time zone for your SGE cluster. Defaults to <code>EST</code> for JHPCE.</p></td>
+    </tr>
+    <tr>
+      <th>date_lines</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character(2)</a></code> vector with the start and end text lines
+used for detecting the start and end times of the job.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical if user is named travis</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>A vector of length 2 with the start and end times</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>John Muschelli (2019). gcite: Google Citation Parser.
-R package version 0.10.1. <a href='https://CRAN.R-project.org/package=gcite'>https://CRAN.R-project.org/package=gcite</a></p>
+    <p>Only the first occurrenses of the start and end time line identifiers
+defined by <code>date_lines</code> will be retrieved.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='log_jobid.html'>log_jobid()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>is_travis</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='co'>## Example log file</span>
+<span class='no'>bsp2_log</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'logs'</span>, <span class='st'>'delete_bsp2.txt'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'sgejobs'</span>)
+
+<span class='co'>## Find start/end dates</span>
+<span class='fu'>log_date</span>(<span class='no'>bsp2_log</span>)</div><div class='output co'>#&gt;                     start                       end 
+#&gt; "2019-09-07 14:40:21 EST" "2019-09-07 14:40:59 EST" </div><div class='input'>
+<span class='co'>## Another example log file</span>
+<span class='no'>twas_gene_HIPPO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'logs'</span>,
+    <span class='st'>'compute_weights_full_HIPPO_gene.1.txt'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'sgejobs'</span>)
+<span class='fu'>log_date</span>(<span class='no'>twas_gene_HIPPO</span>)</div><div class='output co'>#&gt;                     start                       end 
+#&gt; "2019-08-12 16:35:41 EST" "2019-08-12 16:35:46 EST" </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Leonardo Collado-Torres</p>
   </div>
 </div>
 

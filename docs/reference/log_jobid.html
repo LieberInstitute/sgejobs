@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if on Travis CI — is_travis • sgejobs</title>
+<title>From a SGE log file, find the job id — log_jobid • sgejobs</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Check if on Travis CI — is_travis" />
-<meta property="og:description" content="Simple check for Travis CI for examples" />
+<meta property="og:title" content="From a SGE log file, find the job id — log_jobid" />
+<meta property="og:description" content="This function searches a log file, such as those created with job_single(),
+for SGE job identifier." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,39 +121,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if on Travis CI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/is_travis.R'><code>R/is_travis.R</code></a></small>
-    <div class="hidden name"><code>is_travis.Rd</code></div>
+    <h1>From a SGE log file, find the job id</h1>
+    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/log_jobid.R'><code>R/log_jobid.R</code></a></small>
+    <div class="hidden name"><code>log_jobid.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simple check for Travis CI for examples</p>
+    <p>This function searches a log file, such as those created with <code><a href='job_single.html'>job_single()</a></code>,
+for SGE job identifier.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_travis</span>()</pre>
+    <pre class="usage"><span class='fu'>log_jobid</span>(<span class='no'>log_file</span>, <span class='kw'>jobid_header</span> <span class='kw'>=</span> <span class='st'>"Job id:"</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>log_file</th>
+      <td><p>The path to a SGE log file.</p></td>
+    </tr>
+    <tr>
+      <th>jobid_header</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> vector with the line header that
+specifies the SGE ID.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical if user is named travis</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p>A <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> vector with the job id (first one found in the log
+file).</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>John Muschelli (2019). gcite: Google Citation Parser.
-R package version 0.10.1. <a href='https://CRAN.R-project.org/package=gcite'>https://CRAN.R-project.org/package=gcite</a></p>
+    <div class='dont-index'><p><code><a href='log_date.html'>log_date()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>is_travis</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='co'>## Example log file</span>
+<span class='no'>bsp2_log</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'logs'</span>, <span class='st'>'delete_bsp2.txt'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'sgejobs'</span>)
+
+<span class='co'>## Find the job id</span>
+<span class='fu'>log_jobid</span>(<span class='no'>bsp2_log</span>)</div><div class='output co'>#&gt; [1] "92500"</div><div class='input'>
+<span class='co'>## Another example log file</span>
+<span class='no'>twas_gene_HIPPO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'logs'</span>,
+    <span class='st'>'compute_weights_full_HIPPO_gene.1.txt'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'sgejobs'</span>)
+
+<span class='co'>## Id for the second example</span>
+<span class='fu'>log_jobid</span>(<span class='no'>twas_gene_HIPPO</span>)</div><div class='output co'>#&gt; [1] "7751602"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Leonardo Collado-Torres</p>
   </div>
 </div>
 

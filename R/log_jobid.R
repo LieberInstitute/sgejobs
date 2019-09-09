@@ -1,4 +1,4 @@
-#' From a SGE log file, find the job id
+#' From a SGE log file, find the SGE job ID
 #'
 #' This function searches a log file, such as those created with [job_single()],
 #' for SGE job identifier.
@@ -10,6 +10,7 @@
 #' @return A `character(1)` vector with the job id (first one found in the log
 #' file).
 #' @export
+#' @author Leonardo Collado-Torres
 #' @seealso [log_date()]
 #'
 #' @examples

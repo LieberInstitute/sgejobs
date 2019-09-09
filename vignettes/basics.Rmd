@@ -38,15 +38,20 @@ cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
 
 ## Write bibliography information
 bib <- c(
-    BiocStyle = citation('BiocStyle'),
     sgejobs = citation('sgejobs'),
+    BiocStyle = citation('BiocStyle'),
+    glue = citation('glue'),
     knitcitations = citation('knitcitations'),
     knitr = citation('knitr')[3],
+    lubridate = citation('lubridate'),
+    pryr = citation('pryr'),
+    purrr = citation('purrr'),
     R = citation(),
     remotes = citation('remotes'),
     rmarkdown = citation('rmarkdown')[1],
     sessioninfo = citation('sessioninfo'),
-    testthat = citation('testthat')
+    testthat = citation('testthat'),
+    tidyr = citation('tidyr')
 )
 
 write.bibtex(bib, file = 'basics.bib')
@@ -95,11 +100,16 @@ The `r Githubpkg('LieberInstitute/sgejobs')` package `r citep(bib[['sgejobs']])`
 
 * R `r citep(bib[['R']])`
 * `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
+* `r CRANpkg('glue')` `r citep(bib[['glue']])`
 * `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
+* `r CRANpkg('lubridate')` `r citep(bib[['lubridate']])`
+* `r CRANpkg('pryr')` `r citep(bib[['pryr']])`
+* `r CRANpkg('purrr')` `r citep(bib[['purrr']])`
 * `r CRANpkg('remotes')` `r citep(bib[['remotes']])`
 * `r CRANpkg('rmarkdown')` `r citep(bib[['rmarkdown']])`
 * `r CRANpkg('sessioninfo')` `r citep(bib[['sessioninfo']])`
 * `r CRANpkg('testthat')` `r citep(bib[['testthat']])`
+* `r CRANpkg('tidyr')` `r citep(bib[['tidyr']])`
 
 
 Code for creating the vignette

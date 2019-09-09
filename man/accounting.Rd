@@ -36,7 +36,7 @@ information recorded by SGE on the performance of these SGE jobs.
 \examples{
 
 ## Requires JHPCE to run
-if(!is.travis()) accounting(c('92500', '77672'))
+if(!is_travis()) accounting(c('92500', '77672'))
 
 
 
@@ -49,7 +49,7 @@ acc_info <- list('92500' = readLines(
     package = 'sgejobs')))
 acc_info
 
-if(!is.travis()) identical(acc_info_jhpce, acc_info)
+if(!is_travis()) identical(acc_info_jhpce, acc_info)
 
 
 ## Example for an array job
@@ -75,6 +75,7 @@ accounting_info <- list(
 
 ## Here we parse the data from `qacct` into a data.frame
 res <- accounting_parse(accounting_info)
+res
 
 ## Check the maximum memory use
 res$maxvmem
@@ -82,4 +83,14 @@ res$maxvmem
 ## And the absolute maximum
 pryr:::show_bytes(max(res$maxvmem))
 
+}
+\references{
+For the ss function used by accounting_parse():
+
+Leonardo Collado-Torres, Andrew E. Jaffe and Emily E. Burke (2019). jaffelab:
+Commonly used functions by the Jaffe lab. R package version 0.99.27.
+https://github.com/LieberInstitute/jaffelab
+}
+\author{
+Leonardo Collado-Torres
 }

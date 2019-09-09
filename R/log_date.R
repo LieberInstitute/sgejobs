@@ -1,4 +1,4 @@
-#' From a SGE log file, find the start and end times
+#' From a SGE log file, find the SGE start and end times
 #'
 #' This function searches a log file, such as those created with [job_single()],
 #' for the start and end dates for the SGE job. This information can then be
@@ -15,6 +15,7 @@
 #' @return A vector of length 2 with the start and end times
 #' @import lubridate purrr
 #' @export
+#' @author Leonardo Collado-Torres
 #' @seealso [log_jobid()]
 #'
 #' @examples

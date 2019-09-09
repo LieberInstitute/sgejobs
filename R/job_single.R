@@ -1,4 +1,4 @@
-#' Build a SGE job script
+#' Build a SGE job bash script
 #'
 #' This function builds a template for a Son of Grid Ending (SGE) job script
 #' including array jobs. Check this blog post by John Muschelli to learn

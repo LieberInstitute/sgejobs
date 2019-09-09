@@ -21,7 +21,7 @@ run_test <- function(restore, array_num) {
         array_submit_num(
             job_bash = paste0(job_name, '.sh'),
             array_num = array_num,
-            submit = !restore,
+            submit = FALSE,
             restore = restore
         )
 

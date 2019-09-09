@@ -44,3 +44,6 @@ log_date(twas_gene_HIPPO)
 \seealso{
 \code{\link[=log_jobid]{log_jobid()}}
 }
+\author{
+Leonardo Collado-Torres
+}

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Temporarily evaluate an expression in a directory — with_wd • sgejobs</title>
+<title>Submit an array job with a specified set of task IDs — array_submit • sgejobs</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,11 @@
 
 
 
-<meta property="og:title" content="Temporarily evaluate an expression in a directory — with_wd" />
-<meta property="og:description" content="Temporarily evaluate an expression in a directory, then set the directory
-back to the original." />
+<meta property="og:title" content="Submit an array job with a specified set of task IDs — array_submit" />
+<meta property="og:description" content="Given a bash script that specifies the SGE option -t (that is, an array job),
+this function submits that job using qsub for a given list of task
+IDs. This function is useful in case some tasks for a given job failed which
+you can find using qstat | grep Eqw or other options." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,55 +123,82 @@ back to the original." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Temporarily evaluate an expression in a directory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>with_wd.Rd</code></div>
+    <h1>Submit an array job with a specified set of task IDs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/LieberInstitute/sgejobs/blob/master/R/array_submit.R'><code>R/array_submit.R</code></a></small>
+    <div class="hidden name"><code>array_submit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Temporarily evaluate an expression in a directory, then set the directory
-back to the original.</p>
+    <p>Given a bash script that specifies the SGE option -t (that is, an array job),
+this function submits that job using <code>qsub</code> for a given list of task
+IDs. This function is useful in case some tasks for a given job failed which
+you can find using <code>qstat | grep Eqw</code> or other options.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>with_wd</span>(<span class='no'>dir</span>, <span class='no'>expr</span>)</pre>
+    <pre class="usage"><span class='fu'>array_submit</span>(<span class='no'>job_bash</span>, <span class='no'>task_ids</span>, <span class='kw'>submit</span> <span class='kw'>=</span> !<span class='fu'><a href='is_travis.html'>is_travis</a></span>(), <span class='kw'>restore</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dir</th>
-      <td><p>a directory to perform an expression within.</p></td>
+      <th>job_bash</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> vector with the name of a bash script
+in the current working directory.</p></td>
     </tr>
     <tr>
-      <th>expr</th>
-      <td><p>expression to evaluate.</p></td>
+      <th>task_ids</th>
+      <td><p>A set of task ids that will get parsed by <a href='parse_task_ids.html'>parse_task_ids</a>.</p></td>
+    </tr>
+    <tr>
+      <th>submit</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> vector determining whether to actually submit
+the tasks or not using <code>qsub</code>.</p></td>
+    </tr>
+    <tr>
+      <th>restore</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> vector determining whether to restore the
+script to the original state.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>See here: http://plantarum.ca/code/setwd-part2/</p>
+    <p>The path to <code>job_bash</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Create a directory called 'hola' and then check that it exists</span>
-<span class='fu'>with_wd</span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), {
-    <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='st'>'hola'</span>, <span class='kw'>showWarnings</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-    <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='st'>'hola'</span>)
-})</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'>## Choose a script name</span>
+<span class='no'>job_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>'array_submit_example_'</span>, <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.Date</a></span>())
+
+<span class='co'>## Create an array job on the temporary directory</span>
+<span class='fu'><a href='with_wd.html'>with_wd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), {
+    <span class='co'>## Create an array job script to use for this example</span>
+    <span class='fu'><a href='job_single.html'>job_single</a></span>(
+        <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>job_name</span>,
+        <span class='kw'>create_shell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+        <span class='kw'>task_num</span> <span class='kw'>=</span> <span class='fl'>100</span>
+    )
+
+    <span class='co'>## Now we can submit the SGE job for a set of task IDs</span>
+    <span class='fu'>array_submit</span>(
+        <span class='kw'>job_bash</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>job_name</span>, <span class='st'>'.sh'</span>),
+        <span class='kw'>task_ids</span> <span class='kw'>=</span> <span class='st'>'225019-225038:1,225040,225043'</span>,
+        <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    )
+
+})</div><div class='output co'>#&gt; <span class='message'>2019-09-09 17:04:07 creating the logs directory at:  logs</span></div><div class='output co'>#&gt; <span class='message'>2019-09-09 17:04:07 creating the shell file array_submit_example_2019-09-09.sh</span></div><div class='output co'>#&gt; <span class='message'>To submit the job use: qsub array_submit_example_2019-09-09.sh</span></div><div class='output co'>#&gt; <span class='message'>2019-09-09 17:04:07 resubmitting the SGE job for task 225019-225038:1</span></div><div class='output co'>#&gt; <span class='message'>qsub array_submit_example_2019-09-09.sh</span></div><div class='output co'>#&gt; <span class='message'>2019-09-09 17:04:07 resubmitting the SGE job for task 225040-225040</span></div><div class='output co'>#&gt; <span class='message'>qsub array_submit_example_2019-09-09.sh</span></div><div class='output co'>#&gt; <span class='message'>2019-09-09 17:04:07 resubmitting the SGE job for task 225043-225043</span></div><div class='output co'>#&gt; <span class='message'>qsub array_submit_example_2019-09-09.sh</span></div><div class='output co'>#&gt; [1] "array_submit_example_2019-09-09.sh"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Tyler Smith, contributed to regionReport by David Robinson
-https://github.com/dgrtwo</p>
+    <p>Leonardo Collado-Torres</p>
   </div>
 </div>
 
