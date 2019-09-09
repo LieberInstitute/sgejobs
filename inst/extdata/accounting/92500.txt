@@ -1,0 +1,45 @@
+==============================================================
+qname        shared.q
+hostname     compute-089.cm.cluster
+group        lieber_jaffe
+owner        lcollado
+project      NONE
+department   defaultdepartment
+jobname      delete_bsp2
+jobnumber    92500
+taskid       undefined
+account      sge
+priority     0
+qsub_time    Sat Sep  7 14:40:00 2019
+start_time   Sat Sep  7 14:40:16 2019
+end_time     Sat Sep  7 14:40:59 2019
+granted_pe   NONE
+slots        1
+failed       0
+exit_status  0
+ru_wallclock 43s
+ru_utime     0.745s
+ru_stime     0.814s
+ru_maxrss    7.004KB
+ru_ixrss     0.000B
+ru_ismrss    0.000B
+ru_idrss     0.000B
+ru_isrss     0.000B
+ru_minflt    53903
+ru_majflt    0
+ru_nswap     0
+ru_inblock   64
+ru_oublock   184
+ru_msgsnd    0
+ru_msgrcv    0
+ru_nsignals  0
+ru_nvcsw     8837
+ru_nivcsw    107
+cpu          1.559s
+mem          607.126KBs
+io           779.092KB
+iow          0.000s
+maxvmem      5.867MB
+arid         undefined
+ar_sub_time  undefined
+category     -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=10G,mem_free=10G

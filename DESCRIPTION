@@ -1,7 +1,7 @@
 Package: sgejobs
 Title: Helper functions for SGE jobs at JHPCE
 Version: 0.99.0
-Date: 2019-08-28
+Date: 2019-09-09
 Authors@R: 
     c(
         person(
@@ -34,4 +34,6 @@ VignetteBuilder: knitr
 Imports: 
     purrr,
     glue,
-    lubridate
+    lubridate,
+    tidyr,
+    pryr

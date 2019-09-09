@@ -15,3 +15,7 @@ date from an SGE log file as well as the job id.
 * Added the function `array_submit_num()` for submitting an array job given a
 maximum task number. This function deals with the array task maximum imposed by
 JHPCE of 75000 tasks per array job.
+* Added the function `accounting()` with helper functions `accounting_read()`
+and `accounting_parse()` which read and parse the `qacct` information from SGE
+on a set of SGE job IDs and ultimately return a `data.frame` with the job
+summary information.
