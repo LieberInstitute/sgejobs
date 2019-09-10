@@ -114,6 +114,8 @@ accounting_read <- function(job_ids) {
 #'
 
 accounting_parse <- function(accounting_info, tz = 'EST') {
+    ## For R CMD check
+    variable <- value <- NULL
     ids <- names(accounting_info)
 
     res <- purrr::map2_dfr(accounting_info, ids, function(x, i) {
