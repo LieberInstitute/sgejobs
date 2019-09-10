@@ -75,7 +75,10 @@ array_submit <- function(job_bash, task_ids, submit = !is_travis(),
         message(paste(Sys.time(), 'resubmitting the SGE job for task', task))
         cmd <- paste('qsub', job_bash)
         message(cmd)
-        if(submit) system(cmd)
+        if(submit) {
+            cmd_msg <- system(cmd, intern = TRUE)
+            message(cmd_msg)
+        }
 
         ## Done
         return(cmd)
