@@ -118,6 +118,9 @@ job_single <- function(name, create_shell = FALSE, queue = 'shared',
     log_file <- file.path(logdir,
         paste0(name, ifelse(!is.null(task_num), '.$TASK_ID', ''), '.txt'))
 
+    ## For sgejobs version
+    version <- packageVersion('sgejobs')
+
     ## Now build the script
     script <- glue::glue(
 '#!/bin/bash
@@ -149,6 +152,9 @@ module list
 
 echo "**** Job ends ****"
 date
+
+## This script was made using sgejobs version {version}
+## available from http://research.libd.org/sgejobs/
 
 '
     )
