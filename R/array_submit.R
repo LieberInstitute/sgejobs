@@ -76,8 +76,16 @@ array_submit <- function(job_bash, task_ids, submit = !is_travis(),
         cmd <- paste('qsub', job_bash)
         message(cmd)
         if(submit) {
-            cmd_msg <- system(cmd, intern = TRUE)
-            message(cmd_msg)
+            ## Check if qstat can run
+            qstat_status <- suppressWarnings(
+                system('qstat', ignore.stdout = TRUE, ignore.stderr = TRUE)
+            )
+            if(qstat_status == 127) {
+                system(cmd)
+            } else {
+                cmd_msg <- system(cmd, intern = TRUE)
+                message(cmd_msg)
+            }
         }
 
         ## Done
