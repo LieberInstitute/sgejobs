@@ -70,7 +70,8 @@ accounting_read <- function(job_ids,
             message(paste(Sys.time(), 'reading job', id))
             x <- system(paste('qacct -j', id, '-f', acc_file), intern = TRUE)
             if(length(x) == 0) return(NULL)
-            return(x)
+            ## Remove leading and ending white space
+            return(trimws(x))
         }
     )
     names(accounting_info) <- job_ids
@@ -205,8 +206,8 @@ accounting_parse <- function(accounting_info, tz = 'EST') {
     res2$ru_ixrss <- format_mem(res2$ru_ixrss)
     res2$ru_maxrss <- format_mem(res2$ru_maxrss)
 
-    ## Guess the format again
-    res2 <- readr::type_convert(res2)
+    ## Guess the format again (don't show these messages though)
+    res2 <- suppressMessages(readr::type_convert(res2))
 
     ## Done
     return(res2)
