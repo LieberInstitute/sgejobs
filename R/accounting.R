@@ -198,7 +198,7 @@ accounting_parse <- function(accounting_info, tz = 'EST') {
     }
     res2$io <- format_mem(res2$io)
     res2$maxvmem <- format_mem(res2$maxvmem)
-    message("Note: the column 'mem' was original in memory/second.")
+    message("Note: the column 'mem' is now in bytes / second.")
     res2$mem <- format_mem(res2$mem)
     res2$ru_idrss <- format_mem(res2$ru_idrss)
     res2$ru_isrss <- format_mem(res2$ru_isrss)
