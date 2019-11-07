@@ -1,3 +1,9 @@
+# sgejobs 0.99.1
+
+* Add the `accounting_files` parameter to the `accounting()` family of
+functions now that archive files have been created at JHPCE for this type of
+SGE job information.
+
 # sgejobs 0.99.0
 
 * Added a `NEWS.md` file to track changes to the package.

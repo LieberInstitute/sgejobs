@@ -13,16 +13,22 @@
 #' @examples
 #'
 #' ## Requires JHPCE to run
-#' if(!is_travis()) accounting(c('92500', '77672'))
+#' if(!is_travis()) head(accounting(c('92500', '77672'),
+#'     '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'))
 #'
 #'
 
-accounting <- function(job_ids, tz = 'EST') {
-    accounting_info <- accounting_read(job_ids = job_ids)
+accounting <- function(job_ids,
+    accounting_files = '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting',
+    tz = 'EST') {
+    accounting_info <- accounting_read(job_ids = job_ids,
+        accounting_files = accounting_files)
     accounting_parse(accounting_info, tz = tz)
 }
 
 #' @param job_ids A `character` vector of SGE job IDs to inspect.
+#' @param accounting_files A `character` vector with the paths to the SGE
+#' accounting files.
 #' @return `accounting_read`: A list with the output from `qacct` by SGE for
 #' each of the SGE job IDs.
 #' @export
@@ -32,7 +38,8 @@ accounting <- function(job_ids, tz = 'EST') {
 #' @examples
 #'
 #' ## Requires JHPCE access
-#' if(!is_travis()) acc_info_jhpce <- accounting_read('92500')
+#' if(!is_travis()) acc_info_jhpce <- accounting_read('92500',
+#'     '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 #'
 #' ## The above is identical
 #' acc_info <- list('92500' = readLines(
@@ -44,7 +51,8 @@ accounting <- function(job_ids, tz = 'EST') {
 #'
 #'
 #' ## Example for an array job
-#' if(!is_travis()) acc_info_jhpce_array <- accounting_read('77672')
+#' if(!is_travis()) acc_info_jhpce_array <- accounting_read('77672',
+#'     '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 #'
 #' ## The example file has been subset to just the first two tasks
 #' acc_info_array <- list('77672' = readLines(
@@ -52,12 +60,15 @@ accounting <- function(job_ids, tz = 'EST') {
 #'     package = 'sgejobs')))
 #'
 
-accounting_read <- function(job_ids) {
-    accounting_info <- purrr::map(
+accounting_read <- function(job_ids,
+    accounting_files = '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting'
+    ) {
+    accounting_info <- purrr::map2(
         job_ids,
-        function(id) {
+        accounting_files,
+        function(id, acc_file) {
             message(paste(Sys.time(), 'reading job', id))
-            x <- system(paste('qacct -j', id), intern = TRUE)
+            x <- system(paste('qacct -j', id, '-f', acc_file), intern = TRUE)
             if(length(x) == 0) return(NULL)
             return(x)
         }
@@ -91,7 +102,9 @@ accounting_read <- function(job_ids) {
 #' @examples
 #'
 #' ## Requires JHPCE access
-#' if(!is_travis()) accounting_info_jhpce <- accounting_read(c('92500', '77672'))
+#' if(!is_travis()) accounting_info_jhpce <- accounting_read(
+#'     c('92500', '77672'),
+#'     '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 #'
 #' ## Here we use the data included in the package to avoid depending on JHPCE
 #' ## where the data for job 77672 has been subset for the first two tasks.

@@ -71,7 +71,7 @@ information recorded by SGE on the performance of these SGE jobs." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sgejobs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
       </span>
     </div>
 
@@ -133,9 +133,12 @@ using <code>qacct</code> and then parse it to produce a data.frame with the summ
 information recorded by SGE on the performance of these SGE jobs.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>accounting</span>(<span class='no'>job_ids</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"EST"</span>)
+    <pre class="usage"><span class='fu'>accounting</span>(<span class='no'>job_ids</span>,
+  <span class='kw'>accounting_files</span> <span class='kw'>=</span> <span class='st'>"/cm/shared/apps/sge/sge-8.1.9/default/common/accounting"</span>,
+  <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"EST"</span>)
 
-<span class='fu'>accounting_read</span>(<span class='no'>job_ids</span>)
+<span class='fu'>accounting_read</span>(<span class='no'>job_ids</span>,
+  <span class='kw'>accounting_files</span> <span class='kw'>=</span> <span class='st'>"/cm/shared/apps/sge/sge-8.1.9/default/common/accounting"</span>)
 
 <span class='fu'>accounting_parse</span>(<span class='no'>accounting_info</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='st'>"EST"</span>)</pre>
 
@@ -145,6 +148,11 @@ information recorded by SGE on the performance of these SGE jobs.</p>
     <tr>
       <th>job_ids</th>
       <td><p>A <code>character</code> vector of SGE job IDs to inspect.</p></td>
+    </tr>
+    <tr>
+      <th>accounting_files</th>
+      <td><p>A <code>character</code> vector with the paths to the SGE
+accounting files.</p></td>
     </tr>
     <tr>
       <th>tz</th>
@@ -174,11 +182,94 @@ https://github.com/LieberInstitute/jaffelab</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Requires JHPCE to run</span>
-<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='fu'>accounting</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>))</div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 reading job 92500</span></div><div class='output co'>#&gt; <span class='error'>Error in system(paste("qacct -j", id), intern = TRUE): error in running command</span></div><div class='input'>
+<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>accounting</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>),
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>))</div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:12 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:14 reading job 77672</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:15 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:15 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' was original in memory/second.</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+#&gt; <span class='message'>cols(</span>
+#&gt; <span class='message'>  .default = col_character(),</span>
+#&gt; <span class='message'>  input_id = <span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  exit_status = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  failed = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  jobnumber = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  priority = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_inblock = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_majflt = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_minflt = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_msgrcv = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_msgsnd = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_nivcsw = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_nsignals = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_nswap = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_nvcsw = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  ru_oublock = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  slots = </span><span style='color: #00BB00;'>col_double()</span><span></span>
+#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>See spec(...) for full column specifications.</span></div><div class='output co'>#&gt;   input_id account ar_sub_time      arid
+#&gt; 1 77672.10     sge   undefined undefined
+#&gt; 2 77672.10     sge   undefined undefined
+#&gt; 3 77672.11     sge   undefined undefined
+#&gt; 4 77672.12     sge   undefined undefined
+#&gt; 5 77672.13     sge   undefined undefined
+#&gt; 6 77672.14     sge   undefined undefined
+#&gt;                                                                     category
+#&gt; 1 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt; 2 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt; 3 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt; 4 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt; 5 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt; 6 -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=3G,mem_free=3G -pe local 4
+#&gt;         cpu        department            end_time exit_status failed granted_pe
+#&gt; 1  747.887s defaultdepartment 2019-09-04 11:55:14           0      0      local
+#&gt; 2  820.575s defaultdepartment 2019-09-04 11:54:57           0      0      local
+#&gt; 3  785.853s defaultdepartment 2019-09-04 11:56:24           0      0      local
+#&gt; 4  945.925s defaultdepartment 2019-09-04 12:00:03           0      0      local
+#&gt; 5  826.657s defaultdepartment 2019-09-04 11:51:42           0      0      local
+#&gt; 6 1023.675s defaultdepartment 2019-09-04 11:56:31           0      0      local
+#&gt;          group               hostname         io    iow
+#&gt; 1 lieber_jaffe compute-051.cm.cluster 4.1198e+10 0.000s
+#&gt; 2 lieber_jaffe compute-068.cm.cluster 4.6031e+10 0.000s
+#&gt; 3 lieber_jaffe compute-073.cm.cluster 4.5359e+10 0.000s
+#&gt; 4 lieber_jaffe compute-057.cm.cluster 5.6480e+10 0.000s
+#&gt; 5 lieber_jaffe compute-067.cm.cluster 5.1190e+10 0.000s
+#&gt; 6 lieber_jaffe compute-074.cm.cluster 2.5071e+10 0.000s
+#&gt;                                 jobname jobnumber   maxvmem         mem
+#&gt; 1 compute_aucs_duplicatesRemoved_v0.4.0     77672 953344000 6.93543e+11
+#&gt; 2 compute_aucs_duplicatesRemoved_v0.4.0     77672 953359000 7.61956e+11
+#&gt; 3 compute_aucs_duplicatesRemoved_v0.4.0     77672 953348000 7.29270e+11
+#&gt; 4 compute_aucs_duplicatesRemoved_v0.4.0     77672 953352000 8.78102e+11
+#&gt; 5 compute_aucs_duplicatesRemoved_v0.4.0     77672 955227000 7.65332e+11
+#&gt; 6 compute_aucs_duplicatesRemoved_v0.4.0     77672 953344000 3.76049e+11
+#&gt;      owner priority project    qname           qsub_time ru_idrss ru_inblock
+#&gt; 1 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   33755664
+#&gt; 2 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   43985088
+#&gt; 3 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   41068272
+#&gt; 4 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   47415864
+#&gt; 5 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   43959632
+#&gt; 6 lcollado        0    NONE shared.q 2019-09-04 11:45:54        0   55276608
+#&gt;   ru_ismrss ru_isrss ru_ixrss ru_majflt ru_maxrss ru_minflt ru_msgrcv ru_msgsnd
+#&gt; 1         0        0        0         1    953348    124265         0         0
+#&gt; 2         0        0        0         1    953359   8307830         0         0
+#&gt; 3         0        0        0         0    953352   8506750         0         0
+#&gt; 4         0        0        0         1    953355   5429125         0         0
+#&gt; 5         0        0        0         1    953348   7893823         0         0
+#&gt; 6         0        0        0         0    953348    127282         0         0
+#&gt;   ru_nivcsw ru_nsignals ru_nswap ru_nvcsw ru_oublock ru_stime ru_utime
+#&gt; 1     44094           0        0  3237249        192 135.616s 612.272s
+#&gt; 2     65816           0        0  3598726        192 134.377s 686.198s
+#&gt; 3     21220           0        0  3600523        192 130.147s 655.707s
+#&gt; 4     36304           0        0  4421478        192 167.821s 778.104s
+#&gt; 5     40571           0        0  4022799        192 128.333s 698.325s
+#&gt; 6     18494           0        0  5136881        192 149.729s 873.946s
+#&gt;   ru_wallclock slots          start_time taskid
+#&gt; 1         526s     4 2019-09-04 11:46:28      1
+#&gt; 2         517s     4 2019-09-04 11:46:20     10
+#&gt; 3         592s     4 2019-09-04 11:46:32     11
+#&gt; 4         815s     4 2019-09-04 11:46:28     12
+#&gt; 5         313s     4 2019-09-04 11:46:29     13
+#&gt; 6         602s     4 2019-09-04 11:46:29     14</div><div class='input'>
 
 
 <span class='co'>## Requires JHPCE access</span>
-<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'92500'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 reading job 92500</span></div><div class='output co'>#&gt; <span class='error'>Error in system(paste("qacct -j", id), intern = TRUE): error in running command</span></div><div class='input'>
+<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'92500'</span>,
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:16 reading job 92500</span></div><div class='input'>
 <span class='co'>## The above is identical</span>
 <span class='no'>acc_info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>'92500'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(
     <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'accounting'</span>, <span class='st'>'92500.txt'</span>,
@@ -230,10 +321,11 @@ https://github.com/LieberInstitute/jaffelab</p>
 #&gt; [44] "ar_sub_time  undefined"                                                       
 #&gt; [45] "category     -u lcollado -l h_fsize=100G,h_stack=512M,h_vmem=10G,mem_free=10G"
 #&gt; </div><div class='input'>
-<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>acc_info_jhpce</span>, <span class='no'>acc_info</span>)</div><div class='output co'>#&gt; <span class='error'>Error in identical(acc_info_jhpce, acc_info): object 'acc_info_jhpce' not found</span></div><div class='input'>
+<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>acc_info_jhpce</span>, <span class='no'>acc_info</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 
 <span class='co'>## Example for an array job</span>
-<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce_array</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'77672'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 reading job 77672</span></div><div class='output co'>#&gt; <span class='error'>Error in system(paste("qacct -j", id), intern = TRUE): error in running command</span></div><div class='input'>
+<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce_array</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'77672'</span>,
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:18 reading job 77672</span></div><div class='input'>
 <span class='co'>## The example file has been subset to just the first two tasks</span>
 <span class='no'>acc_info_array</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>'77672'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(
     <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'accounting'</span>, <span class='st'>'77672.txt'</span>,
@@ -241,7 +333,9 @@ https://github.com/LieberInstitute/jaffelab</p>
 
 
 <span class='co'>## Requires JHPCE access</span>
-<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>accounting_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>))</div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 reading job 92500</span></div><div class='output co'>#&gt; <span class='error'>Error in system(paste("qacct -j", id), intern = TRUE): error in running command</span></div><div class='input'>
+<span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>accounting_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>),
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:19 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:21 reading job 77672</span></div><div class='input'>
 <span class='co'>## Here we use the data included in the package to avoid depending on JHPCE</span>
 <span class='co'>## where the data for job 77672 has been subset for the first two tasks.</span>
 <span class='no'>accounting_info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
@@ -252,10 +346,10 @@ https://github.com/LieberInstitute/jaffelab</p>
 )
 
 <span class='co'>## Here we parse the data from `qacct` into a data.frame</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_parse</span>(<span class='no'>accounting_info</span>)</div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-09-10 10:30:54 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' was original in memory/second.</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_parse</span>(<span class='no'>accounting_info</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:23 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 11:47:23 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' was original in memory/second.</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  .default = col_character(),</span>
-#&gt; <span class='message'>  input_id = <span style='color: #00BB00;'>col_double()</span><span>,</span>
+#&gt; <span class='message'>  input_id = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
 #&gt; <span class='message'>  exit_status = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
 #&gt; <span class='message'>  failed = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
 #&gt; <span class='message'>  jobnumber = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
@@ -334,7 +428,7 @@ https://github.com/LieberInstitute/jaffelab</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

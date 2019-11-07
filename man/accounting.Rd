@@ -6,14 +6,20 @@
 \alias{accounting_parse}
 \title{Extract and parse the SGE job accounting information}
 \usage{
-accounting(job_ids, tz = "EST")
+accounting(job_ids,
+  accounting_files = "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting",
+  tz = "EST")
 
-accounting_read(job_ids)
+accounting_read(job_ids,
+  accounting_files = "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting")
 
 accounting_parse(accounting_info, tz = "EST")
 }
 \arguments{
 \item{job_ids}{A \code{character} vector of SGE job IDs to inspect.}
+
+\item{accounting_files}{A \code{character} vector with the paths to the SGE
+accounting files.}
 
 \item{tz}{Time zone for your SGE cluster. Defaults to \code{EST} for JHPCE.}
 
@@ -36,12 +42,14 @@ information recorded by SGE on the performance of these SGE jobs.
 \examples{
 
 ## Requires JHPCE to run
-if(!is_travis()) accounting(c('92500', '77672'))
+if(!is_travis()) head(accounting(c('92500', '77672'),
+    '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'))
 
 
 
 ## Requires JHPCE access
-if(!is_travis()) acc_info_jhpce <- accounting_read('92500')
+if(!is_travis()) acc_info_jhpce <- accounting_read('92500',
+    '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 
 ## The above is identical
 acc_info <- list('92500' = readLines(
@@ -53,7 +61,8 @@ if(!is_travis()) identical(acc_info_jhpce, acc_info)
 
 
 ## Example for an array job
-if(!is_travis()) acc_info_jhpce_array <- accounting_read('77672')
+if(!is_travis()) acc_info_jhpce_array <- accounting_read('77672',
+    '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 
 ## The example file has been subset to just the first two tasks
 acc_info_array <- list('77672' = readLines(
@@ -62,7 +71,9 @@ acc_info_array <- list('77672' = readLines(
 
 
 ## Requires JHPCE access
-if(!is_travis()) accounting_info_jhpce <- accounting_read(c('92500', '77672'))
+if(!is_travis()) accounting_info_jhpce <- accounting_read(
+    c('92500', '77672'),
+    '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 
 ## Here we use the data included in the package to avoid depending on JHPCE
 ## where the data for job 77672 has been subset for the first two tasks.
