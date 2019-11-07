@@ -57,12 +57,12 @@ gets submitted as a SGE job.
 \examples{
 
 job_loop(
-    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jx')),
+    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
     name = 'bsp2_test'
 )
 
 job_loop(
-    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jx')),
+    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
     cores = 5,
     task_num = 10,
     name = 'bsp2_test_array'

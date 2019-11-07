@@ -208,7 +208,7 @@ working directory.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>job_loop</span>(
-    <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>region</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'DLPFC'</span>, <span class='st'>'HIPPO'</span>), <span class='kw'>feature</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'gene'</span>, <span class='st'>'exon'</span>, <span class='st'>'tx'</span>, <span class='st'>'jx'</span>)),
+    <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>region</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'DLPFC'</span>, <span class='st'>'HIPPO'</span>), <span class='kw'>feature</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'gene'</span>, <span class='st'>'exon'</span>, <span class='st'>'tx'</span>, <span class='st'>'jxn'</span>)),
     <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'bsp2_test'</span>
 )</div><div class='output co'>#&gt; #!/bin/bash
 #&gt; 
@@ -219,7 +219,7 @@ working directory.</p>
 #&gt; mkdir -p logs
 #&gt; 
 #&gt; for region in DLPFC HIPPO; do
-#&gt;     for feature in gene exon tx jx; do
+#&gt;     for feature in gene exon tx jxn; do
 #&gt; 
 #&gt;     ## Internal script name
 #&gt;     SHORT="bsp2_test_${region}_${feature}"
@@ -270,7 +270,7 @@ working directory.</p>
 #&gt; done
 #&gt; </div><div class='input'>
 <span class='fu'>job_loop</span>(
-    <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>region</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'DLPFC'</span>, <span class='st'>'HIPPO'</span>), <span class='kw'>feature</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'gene'</span>, <span class='st'>'exon'</span>, <span class='st'>'tx'</span>, <span class='st'>'jx'</span>)),
+    <span class='kw'>loops</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>region</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'DLPFC'</span>, <span class='st'>'HIPPO'</span>), <span class='kw'>feature</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'gene'</span>, <span class='st'>'exon'</span>, <span class='st'>'tx'</span>, <span class='st'>'jxn'</span>)),
     <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>5</span>,
     <span class='kw'>task_num</span> <span class='kw'>=</span> <span class='fl'>10</span>,
     <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'bsp2_test_array'</span>
@@ -283,7 +283,7 @@ working directory.</p>
 #&gt; mkdir -p logs
 #&gt; 
 #&gt; for region in DLPFC HIPPO; do
-#&gt;     for feature in gene exon tx jx; do
+#&gt;     for feature in gene exon tx jxn; do
 #&gt; 
 #&gt;     ## Internal script name
 #&gt;     SHORT="bsp2_test_array_${region}_${feature}"
