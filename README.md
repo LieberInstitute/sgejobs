@@ -57,7 +57,7 @@ citation('sgejobs')
 #>     title = {sgejobs: Helper functions for SGE jobs at JHPCE},
 #>     author = {Leonardo Collado-Torres},
 #>     year = {2019},
-#>     note = {R package version 0.99.0},
+#>     note = {R package version 0.99.1},
 #>     url = {https://github.com/LieberInstitute/sgejobs},
 #>   }
 ```

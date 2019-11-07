@@ -115,7 +115,7 @@ job_single('jhpce_array_job', create_logdir = FALSE, task_num = 20)
 
 ```{r 'loop'}
 job_loop(
-    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jx')),
+    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
     name = 'bsp2_test'
 )
 ```
@@ -199,14 +199,16 @@ log_date(bsp2_log)
 ## Find job id
 log_jobid(bsp2_log)
 ```
-The idea was that these two functions along with a third function that is yet to be implemented would help you find the accounting file for a given SGE job, such that you could extract the accounting information using `qacct` from that given file. For example, `qacct -f /cm/shared/apps/sge/var/default/common/accounting_20170703_0300.txt -j 1526131`. However, at JHPCE since the upgrade to CentOS v7 this might no longer be necessary.
+
+The idea was that these two functions along with a third function (that is yet to be implemented) would help you find the accounting file for a given SGE job, such that you could extract the accounting information using `qacct` from that given file. For example, `qacct -f /cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt -j 92500`.
 
 In any case, once you have the SGE job id (be it an array job or not), you can extract the information using the [`accounting()`](../articles/accounting.html) functions. Since some require that `qacct` be available on your system, we split the code into functions that read the data and parse it.
 
 ```{r 'accounting'}
 ## If you are at JHPCE you can run this:
 if(FALSE) {
-  accounting(c('92500', '77672'))
+  accounting(c('92500', '77672'),
+      '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
 }
 
 ## However, if you are not at JHPCE, we included some example data

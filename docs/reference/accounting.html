@@ -183,7 +183,7 @@ https://github.com/LieberInstitute/jaffelab</p>
     <pre class="examples"><div class='input'>
 <span class='co'>## Requires JHPCE to run</span>
 <span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>accounting</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>),
-    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>))</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:01 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:02 reading job 77672</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:03 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:03 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' is now in bytes / second.</span></div><div class='output co'>#&gt;   input_id account ar_sub_time      arid
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>))</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:13 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:20 reading job 77672</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:22 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:22 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' is now in bytes / second.</span></div><div class='output co'>#&gt;   input_id account ar_sub_time      arid
 #&gt; 1 77672.10     sge   undefined undefined
 #&gt; 2 77672.10     sge   undefined undefined
 #&gt; 3 77672.11     sge   undefined undefined
@@ -250,7 +250,7 @@ https://github.com/LieberInstitute/jaffelab</p>
 
 <span class='co'>## Requires JHPCE access</span>
 <span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'92500'</span>,
-    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:03 reading job 92500</span></div><div class='input'>
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:23 reading job 92500</span></div><div class='input'>
 <span class='co'>## The above is identical</span>
 <span class='no'>acc_info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>'92500'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(
     <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'accounting'</span>, <span class='st'>'92500.txt'</span>,
@@ -306,7 +306,7 @@ https://github.com/LieberInstitute/jaffelab</p>
 
 <span class='co'>## Example for an array job</span>
 <span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>acc_info_jhpce_array</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(<span class='st'>'77672'</span>,
-    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:05 reading job 77672</span></div><div class='input'>
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:24 reading job 77672</span></div><div class='input'>
 <span class='co'>## The example file has been subset to just the first two tasks</span>
 <span class='no'>acc_info_array</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>'77672'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(
     <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'accounting'</span>, <span class='st'>'77672.txt'</span>,
@@ -316,7 +316,7 @@ https://github.com/LieberInstitute/jaffelab</p>
 <span class='co'>## Requires JHPCE access</span>
 <span class='kw'>if</span>(!<span class='fu'><a href='is_travis.html'>is_travis</a></span>()) <span class='no'>accounting_info_jhpce</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_read</span>(
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'92500'</span>, <span class='st'>'77672'</span>),
-    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:06 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:07 reading job 77672</span></div><div class='input'>
+    <span class='st'>'/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt'</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:26 reading job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:28 reading job 77672</span></div><div class='input'>
 <span class='co'>## Here we use the data included in the package to avoid depending on JHPCE</span>
 <span class='co'>## where the data for job 77672 has been subset for the first two tasks.</span>
 <span class='no'>accounting_info</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
@@ -327,7 +327,7 @@ https://github.com/LieberInstitute/jaffelab</p>
 )
 
 <span class='co'>## Here we parse the data from `qacct` into a data.frame</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_parse</span>(<span class='no'>accounting_info</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:08 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:20:08 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' is now in bytes / second.</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt;   input_id account ar_sub_time      arid
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>accounting_parse</span>(<span class='no'>accounting_info</span>)</div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:30 processing job 92500</span></div><div class='output co'>#&gt; <span class='message'>2019-11-07 12:27:30 processing job 77672</span></div><div class='output co'>#&gt; <span class='message'>Note: the column 'mem' is now in bytes / second.</span></div><div class='input'><span class='no'>res</span></div><div class='output co'>#&gt;   input_id account ar_sub_time      arid
 #&gt; 1  77672.1     sge   undefined undefined
 #&gt; 2  77672.2     sge   undefined undefined
 #&gt; 3  92500.0     sge   undefined undefined
