@@ -21,36 +21,39 @@
 #' @examples
 #'
 #' ## Example log file
-#' bsp2_log <- system.file('extdata', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
+#' bsp2_log <- system.file("extdata", "logs", "delete_bsp2.txt", package = "sgejobs")
 #'
 #' ## Find start/end dates
 #' log_date(bsp2_log)
 #'
 #' ## Another example log file
-#' twas_gene_HIPPO <- system.file('extdata', 'logs',
-#'     'compute_weights_full_HIPPO_gene.1.txt', package = 'sgejobs')
+#' twas_gene_HIPPO <- system.file("extdata", "logs",
+#'     "compute_weights_full_HIPPO_gene.1.txt",
+#'     package = "sgejobs"
+#' )
 #' log_date(twas_gene_HIPPO)
 #'
-log_date <- function(log_file, tz = 'EST', date_lines = c('Job starts', 'Job ends')) {
-    if(!file.exists(log_file)) {
-        stop("The 'log_file' ", log_file, ' does not exist.', call. = FALSE)
+log_date <- function(log_file, tz = "EST", date_lines = c("Job starts", "Job ends")) {
+    if (!file.exists(log_file)) {
+        stop("The 'log_file' ", log_file, " does not exist.", call. = FALSE)
     }
-    if(length(date_lines) != 2) {
+    if (length(date_lines) != 2) {
         stop("'date_lines' should be a character vector of length 2, with the text used to identify the start and end of the job.", call. = FALSE)
     }
     log <- readLines(log_file)
 
-    dates <- purrr::map(date_lines,
+    dates <- purrr::map(
+        date_lines,
         ~ lubridate::parse_date_time(
             ## Keep only the first match
-            log[grep(.x, log)[1] + 1], orders = 'a b! d! h!:M!:S! Y!', tz = tz
+            log[grep(.x, log)[1] + 1],
+            orders = "a b! d! h!:M!:S! Y!", tz = tz
         )
     )
     has_date <- purrr::map_lgl(dates, ~ length(.x) > 0)
     dates[!has_date] <- NA
 
     result <- do.call(c, dates)
-    names(result) <- c('start', 'end')
+    names(result) <- c("start", "end")
     return(result)
-
 }

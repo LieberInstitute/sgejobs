@@ -29,11 +29,12 @@ following code:
 
 ``` r
 ## If needed:
-if (!requireNamespace("remotes", quietly = TRUE))
-   install.packages("remotes")
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
 
 ## Install with:
-remotes::install_github('LieberInstitute/sgejobs')
+remotes::install_github("LieberInstitute/sgejobs")
 ```
 
 # Citation
@@ -43,13 +44,12 @@ Please run this yourself to check for any updates on how to cite
 **sgejobs**.
 
 ``` r
-citation('sgejobs')
-#> 
+citation("sgejobs")
 #> To cite package 'sgejobs' in publications use:
 #> 
-#>   Leonardo Collado-Torres (2019). sgejobs: Helper functions for
-#>   SGE jobs at JHPCE. R package version 0.99.1.
-#>   https://github.com/LieberInstitute/sgejobs
+#>   Collado-Torres L (2019). _sgejobs: Helper functions for SGE jobs at
+#>   JHPCE_. R package version 0.99.1,
+#>   <https://github.com/LieberInstitute/sgejobs>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 

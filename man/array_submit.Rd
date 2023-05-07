@@ -36,7 +36,7 @@ you can find using \verb{qstat | grep Eqw} or other options.
 \examples{
 
 ## Choose a script name
-job_name <- paste0('array_submit_example_', Sys.Date())
+job_name <- paste0("array_submit_example_", Sys.Date())
 
 ## Create an array job on the temporary directory
 with_wd(tempdir(), {
@@ -49,11 +49,10 @@ with_wd(tempdir(), {
 
     ## Now we can submit the SGE job for a set of task IDs
     array_submit(
-        job_bash = paste0(job_name, '.sh'),
-        task_ids = '225019-225038:1,225040,225043',
+        job_bash = paste0(job_name, ".sh"),
+        task_ids = "225019-225038:1,225040,225043",
         submit = FALSE
     )
-
 })
 
 }

@@ -50,7 +50,7 @@ for you.
 \examples{
 
 ## Choose a script name
-job_name <- paste0('array_submit_num_example_', Sys.Date())
+job_name <- paste0("array_submit_num_example_", Sys.Date())
 
 ## Create an array job on the temporary directory
 with_wd(tempdir(), {
@@ -63,11 +63,10 @@ with_wd(tempdir(), {
 
     ## Now we can submit the SGE job for a given number of tasks
     array_submit_num(
-        job_bash = paste0(job_name, '.sh'),
+        job_bash = paste0(job_name, ".sh"),
         array_num = 75001,
         submit = FALSE
     )
-
 })
 
 

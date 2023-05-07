@@ -21,7 +21,7 @@
 #' @examples
 #'
 #' ## Choose a script name
-#' job_name <- paste0('array_submit_num_example_', Sys.Date())
+#' job_name <- paste0("array_submit_num_example_", Sys.Date())
 #'
 #' ## Create an array job on the temporary directory
 #' with_wd(tempdir(), {
@@ -34,19 +34,21 @@
 #'
 #'     ## Now we can submit the SGE job for a given number of tasks
 #'     array_submit_num(
-#'         job_bash = paste0(job_name, '.sh'),
+#'         job_bash = paste0(job_name, ".sh"),
 #'         array_num = 75001,
 #'         submit = FALSE
 #'     )
-#'
 #' })
 #'
-array_submit_num <- function(job_bash, array_num, submit = file.exists("/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"),
-    restore = TRUE, array_max = 75000L) {
+array_submit_num <- function(
+        job_bash, array_num, submit = file.exists("/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"),
+        restore = TRUE, array_max = 75000L) {
     ## Get the sequence of task ids
     task_ids <- task_ids_num(array_num = array_num, array_max = array_max)
-    array_submit(job_bash = job_bash, task_ids = task_ids, submit = submit,
-        restore = restore)
+    array_submit(
+        job_bash = job_bash, task_ids = task_ids, submit = submit,
+        restore = restore
+    )
 }
 
 #' @inheritParams array_submit_num
@@ -66,12 +68,12 @@ array_submit_num <- function(job_bash, array_num, submit = file.exists("/cm/shar
 #'
 task_ids_num <- function(array_num, array_max = 75000L) {
     ## Check input
-    if(array_num < 1) {
+    if (array_num < 1) {
         stop("'array_num' should be at least 1.", call. = FALSE)
     }
 
-    if(is.numeric(array_num)) array_num <- as.integer(array_num)
-    if(!all(is.integer(array_num))) {
+    if (is.numeric(array_num)) array_num <- as.integer(array_num)
+    if (!all(is.integer(array_num))) {
         stop("'array_num' should be a integer of length 1.", call. = FALSE)
     }
 
@@ -80,7 +82,7 @@ task_ids_num <- function(array_num, array_max = 75000L) {
     ends <- seq(min(array_max, array_num), array_num, by = array_max)
 
     ## Make sure they are the same length.
-    if(length(ends) < length(starts)) ends <- c(ends, array_num)
-    task_ids <- paste0(starts, '-', ends)
+    if (length(ends) < length(starts)) ends <- c(ends, array_num)
+    task_ids <- paste0(starts, "-", ends)
     task_ids
 }

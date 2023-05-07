@@ -19,76 +19,76 @@
 #' @examples
 #'
 #' job_loop(
-#'     loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
-#'     name = 'bsp2_test'
+#'     loops = list(region = c("DLPFC", "HIPPO"), feature = c("gene", "exon", "tx", "jxn")),
+#'     name = "bsp2_test"
 #' )
 #'
 #' job_loop(
-#'     loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
+#'     loops = list(region = c("DLPFC", "HIPPO"), feature = c("gene", "exon", "tx", "jxn")),
 #'     cores = 5,
 #'     task_num = 10,
-#'     name = 'bsp2_test_array'
+#'     name = "bsp2_test_array"
 #' )
 #'
 job_loop <- function(
-    loops,
-    name, create_shell = FALSE, queue = 'shared',
-    memory = '10G', cores = 1L, email = 'e', logdir = 'logs', filesize = '100G',
-    task_num = NULL, tc = 20) {
-
+        loops,
+        name, create_shell = FALSE, queue = "shared",
+        memory = "10G", cores = 1L, email = "e", logdir = "logs", filesize = "100G",
+        task_num = NULL, tc = 20) {
     ## Check that the loops are correctly defined
-    if(!is.list(loops)) {
+    if (!is.list(loops)) {
         stop("'loops' should be a named list.", call. = FALSE)
     }
-    if(length(names(loops)) != length(loops)) {
+    if (length(names(loops)) != length(loops)) {
         stop("'loops' should be a named list.", call. = FALSE)
     }
-    if(!all(purrr::map_lgl(loops, is.character))) {
+    if (!all(purrr::map_lgl(loops, is.character))) {
         stop("All elements of 'loops' should be character vectors.", call. = FALSE)
     }
 
     ## Remove any spaces
-    name <- gsub(' ', '_', name)
+    name <- gsub(" ", "_", name)
 
     ## Check if the shell file exists already
-    if(create_shell) {
-        sh_file <- paste0(name, '.sh')
-        if(file.exists(sh_file)) {
+    if (create_shell) {
+        sh_file <- paste0(name, ".sh")
+        if (file.exists(sh_file)) {
             stop("The file ", sh_file, " already exists!", call. = FALSE)
         }
     }
 
     loop_builder <- function(loop, loop_values) {
-        loop_values <- paste(loop_values, collapse = ' ')
+        loop_values <- paste(loop_values, collapse = " ")
         glue::glue("for {loop} in {loop_values}; do\n")
     }
 
     loop_header <- purrr::map2_chr(names(loops), loops, loop_builder)
-    if(length(loop_header) > 1) {
+    if (length(loop_header) > 1) {
         ## Add the corresponding spaces
         header_spaces <- purrr::map2_chr(
-            rep(' ', length(loop_header)),
-            c(0, seq_len(length(loop_header) -1)) * 4,
-            ~ paste0(rep(.x, .y), collapse = '')
+            rep(" ", length(loop_header)),
+            c(0, seq_len(length(loop_header) - 1)) * 4,
+            ~ paste0(rep(.x, .y), collapse = "")
         )
-        loop_header <- paste0(header_spaces, loop_header, collapse = '\n')
+        loop_header <- paste0(header_spaces, loop_header, collapse = "\n")
     }
 
 
     ## Build an example command
-    command <- paste0('Rscript -e "options(width = 120); ',
+    command <- paste0(
+        'Rscript -e "options(width = 120); ',
         "print('{",
         paste(names(loops), collapse = "}'); print('{"),
         "}');", ' sessioninfo::session_info()"'
     )
 
     ## Define the name of the jobs inside the loop
-    inside_name <- paste0(name, '_{', paste(names(loops), collapse = '}_{'), '}')
+    inside_name <- paste0(name, "_{", paste(names(loops), collapse = "}_{"), "}")
 
 
     ## Build the core script
     script <- job_single(
-        name = '{SHORT}',
+        name = "{SHORT}",
         queue = queue,
         memory = memory,
         cores = cores,
@@ -102,19 +102,21 @@ job_loop <- function(
     )
 
     ## Deal with the scaping
-    script <- gsub('\\$TASK_ID', '\\\\$TASK_ID',
-        gsub('\\{', '\\$\\{',
-            gsub('\\$\\{', '\\\\{', script)
+    script <- gsub(
+        "\\$TASK_ID", "\\\\$TASK_ID",
+        gsub(
+            "\\{", "\\$\\{",
+            gsub("\\$\\{", "\\\\{", script)
         )
     )
-    inside_name <- gsub('\\{', '\\$\\{', inside_name)
+    inside_name <- gsub("\\{", "\\$\\{", inside_name)
 
 
     ## Indentation
-    indent <- paste(rep(' ', 4 * length(loop_header)), collapse = '')
+    indent <- paste(rep(" ", 4 * length(loop_header)), collapse = "")
 
     script_header <- glue::glue(
-'#!/bin/bash
+        '#!/bin/bash
 
 ## Usage:
 # sh {name}.sh
@@ -134,11 +136,11 @@ mkdir -p {logdir}
     )
 
     footer_spaces <- purrr::map2_chr(
-            rep(' ', length(loops)),
-            c(0, seq_len(length(loops) -1)) * 4,
-            ~ paste0(rep(.x, .y), collapse = '')
+        rep(" ", length(loops)),
+        c(0, seq_len(length(loops) - 1)) * 4,
+        ~ paste0(rep(.x, .y), collapse = "")
     )
-    footer <- paste0(rev(footer_spaces), 'done', collapse = '\n')
+    footer <- paste0(rev(footer_spaces), "done", collapse = "\n")
 
     script_footer <- glue::glue('
 {indent}call="qsub .${{SHORT}}.sh"
@@ -146,21 +148,20 @@ mkdir -p {logdir}
 {indent}$call
 {footer}
 
-'
-    )
+')
 
-    script_final <- glue::glue('{script_header}
+    script_final <- glue::glue("{script_header}
 {script}
 
 EOF
 
 {script_footer}
-')
+")
 
     ## Write to a file?
-    if(create_shell) {
-        message(paste(Sys.time(), 'creating the shell file', sh_file))
-        message(paste('To execute the script builder, use: sh', sh_file))
+    if (create_shell) {
+        message(paste(Sys.time(), "creating the shell file", sh_file))
+        message(paste("To execute the script builder, use: sh", sh_file))
         cat(script_final, file = sh_file)
         return(invisible(script_final))
     }

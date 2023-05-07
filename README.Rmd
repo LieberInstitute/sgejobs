@@ -6,10 +6,10 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "man/figures/README-",
+    out.width = "100%"
 )
 ```
 # sgejobs
@@ -28,11 +28,12 @@ Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then 
 
 ```{r, eval = FALSE}
 ## If needed:
-if (!requireNamespace("remotes", quietly = TRUE))
-   install.packages("remotes")
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
 
 ## Install with:
-remotes::install_github('LieberInstitute/sgejobs')
+remotes::install_github("LieberInstitute/sgejobs")
 ```
 
 
@@ -42,7 +43,7 @@ Below is the citation output from using `citation('sgejobs')` in R. Please
 run this yourself to check for any updates on how to cite __sgejobs__.
 
 ```{r 'citation'}
-citation('sgejobs')
+citation("sgejobs")
 ```
 
 # Testing

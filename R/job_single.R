@@ -43,87 +43,91 @@
 #' @examples
 #'
 #' ## A regular job
-#' job_single('jhpce_job', create_logdir = FALSE)
+#' job_single("jhpce_job", create_logdir = FALSE)
 #'
 #' ## A regular job with 10 cores on the 'imaginary' queue
-#' job_single('jhpce_job', cores = 10, queue = 'imaginary',
-#'     create_logdir = FALSE)
+#' job_single("jhpce_job",
+#'     cores = 10, queue = "imaginary",
+#'     create_logdir = FALSE
+#' )
 #'
 #' ## An array job
-#' job_single('jhpce_job_array', task_num = 20, create_logdir = FALSE)
+#' job_single("jhpce_job_array", task_num = 20, create_logdir = FALSE)
 #'
-job_single <- function(name, create_shell = FALSE, queue = 'shared',
-    memory = '10G', cores = 1L, email = 'e', logdir = 'logs', filesize = '100G',
-    task_num = NULL, tc = 20,
-    command = 'Rscript -e "options(width = 120); sessioninfo::session_info()"',
-    create_logdir = TRUE) {
-
-
+job_single <- function(
+        name, create_shell = FALSE, queue = "shared",
+        memory = "10G", cores = 1L, email = "e", logdir = "logs", filesize = "100G",
+        task_num = NULL, tc = 20,
+        command = 'Rscript -e "options(width = 120); sessioninfo::session_info()"',
+        create_logdir = TRUE) {
     ## Remove any spaces
-    name <- gsub(' ', '_', name)
+    name <- gsub(" ", "_", name)
 
     ## Check if the shell file exists already
-    if(create_shell) {
-        sh_file <- paste0(name, '.sh')
-        if(file.exists(sh_file)) {
+    if (create_shell) {
+        sh_file <- paste0(name, ".sh")
+        if (file.exists(sh_file)) {
             stop("The file ", sh_file, " already exists!", call. = FALSE)
         }
     }
 
     ## Check the email options
-    valid_email_opts <- c('a', 'e', 'n', 'b', 'be')
-    if(!email %in% valid_email_opts) {
+    valid_email_opts <- c("a", "e", "n", "b", "be")
+    if (!email %in% valid_email_opts) {
         stop("'email' should be one of the following options:\n",
-            paste(valid_email_opts, collapse = ', '),
-            call. = FALSE)
+            paste(valid_email_opts, collapse = ", "),
+            call. = FALSE
+        )
     }
 
     ## Force the logs directory to be relative
-    if(grepl('^/|^\\\\', logdir)) {
+    if (grepl("^/|^\\\\", logdir)) {
         stop("'logdir' has to be a relative path.")
     }
 
     ## Specify the cores options
-    cores_text <- if(cores > 1) {
-        paste0('#$ -pe local ', as.integer(cores), '\n')
+    cores_text <- if (cores > 1) {
+        paste0("#$ -pe local ", as.integer(cores), "\n")
     } else if (cores < 1) {
         stop("'cores' should be at least 1", call. = FALSE)
     } else {
         ## No need to specify -pe local 1
-        ''
+        ""
     }
 
     ## Specify the job queue
-    queue <- if(queue == 'shared' || queue == '') {
+    queue <- if (queue == "shared" || queue == "") {
         ## There's no queue for shared
-        ''
+        ""
     } else {
-        paste0(trimws(queue), ',')
+        paste0(trimws(queue), ",")
     }
 
     ## Specify the array options if a task number was specified
-    array_spec <- if(!is.null(task_num)) {
-        paste0('#$ -t 1-', task_num, '\n#$ -tc ', tc, '\n')
+    array_spec <- if (!is.null(task_num)) {
+        paste0("#$ -t 1-", task_num, "\n#$ -tc ", tc, "\n")
     } else {
-        ''
+        ""
     }
 
     ## Create the logs directory
-    if(create_logdir) {
-        message(paste(Sys.time(), 'creating the logs directory at: ', logdir))
+    if (create_logdir) {
+        message(paste(Sys.time(), "creating the logs directory at: ", logdir))
         dir.create(logdir, showWarnings = FALSE)
     }
 
     ## Specify the log file
-    log_file <- file.path(logdir,
-        paste0(name, ifelse(!is.null(task_num), '.$TASK_ID', ''), '.txt'))
+    log_file <- file.path(
+        logdir,
+        paste0(name, ifelse(!is.null(task_num), ".$TASK_ID", ""), ".txt")
+    )
 
     ## For sgejobs version
-    version <- packageVersion('sgejobs')
+    version <- packageVersion("sgejobs")
 
     ## Now build the script
     script <- glue::glue(
-'#!/bin/bash
+        '#!/bin/bash
 #$ -cwd
 #$ -l {queue}mem_free={memory},h_vmem={memory},h_fsize={filesize}
 {cores_text}#$ -N {name}
@@ -160,9 +164,9 @@ date
     )
 
     ## Write to a file?
-    if(create_shell) {
-        message(paste(Sys.time(), 'creating the shell file', sh_file))
-        message(paste('To submit the job use: qsub', sh_file))
+    if (create_shell) {
+        message(paste(Sys.time(), "creating the shell file", sh_file))
+        message(paste("To submit the job use: qsub", sh_file))
         cat(script, file = sh_file)
         return(invisible(script))
     }
@@ -170,4 +174,3 @@ date
     ## Done!
     return(script)
 }
-

@@ -16,16 +16,20 @@
 #' accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 #' if (file.exists(accounting_file)) {
 #'     head(
-#'         accounting(c('92500', '77672'),
-#'         accounting_file)
+#'         accounting(
+#'             c("92500", "77672"),
+#'             accounting_file
+#'         )
 #'     )
 #' }
-
-accounting <- function(job_ids,
-    accounting_files = '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting',
-    tz = 'EST') {
-    accounting_info <- accounting_read(job_ids = job_ids,
-        accounting_files = accounting_files)
+accounting <- function(
+        job_ids,
+        accounting_files = "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting",
+        tz = "EST") {
+    accounting_info <- accounting_read(
+        job_ids = job_ids,
+        accounting_files = accounting_files
+    )
     accounting_parse(accounting_info, tz = tz)
 }
 
@@ -40,38 +44,44 @@ accounting <- function(job_ids,
 #' @rdname accounting
 #' @examples
 #' ## Example for a single job
-#' acc_info <- list('92500' = readLines(
-#'     system.file('extdata', 'accounting', '92500.txt',
-#'     package = 'sgejobs')))
+#' acc_info <- list("92500" = readLines(
+#'     system.file("extdata", "accounting", "92500.txt",
+#'         package = "sgejobs"
+#'     )
+#' ))
 #' acc_info
 #'
 #' ## Requires JHPCE access
 #' accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 #' if (file.exists(accounting_file)) {
-#'     acc_info_jhpce <- accounting_read('92500', accounting_file)
+#'     acc_info_jhpce <- accounting_read("92500", accounting_file)
 #'     identical(acc_info_jhpce, acc_info)
 #' }
 #'
 #' ## The example file has been subset to just the first two tasks
-#' acc_info_array <- list('77672' = readLines(
-#'     system.file('extdata', 'accounting', '77672.txt',
-#'     package = 'sgejobs')))
+#' acc_info_array <- list("77672" = readLines(
+#'     system.file("extdata", "accounting", "77672.txt",
+#'         package = "sgejobs"
+#'     )
+#' ))
 #'
 #' ## Requires JHPCE access
 #' #' ## Example for an array job
 #' if (file.exists(accounting_file)) {
-#'     acc_info_jhpce_array <- accounting_read('77672', accounting_file)
+#'     acc_info_jhpce_array <- accounting_read("77672", accounting_file)
 #' }
-accounting_read <- function(job_ids,
-    accounting_files = '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting'
-    ) {
+accounting_read <- function(
+        job_ids,
+        accounting_files = "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting") {
     accounting_info <- purrr::map2(
         job_ids,
         accounting_files,
         function(id, acc_file) {
-            message(paste(Sys.time(), 'reading job', id))
-            x <- system(paste('qacct -j', id, '-f', acc_file), intern = TRUE)
-            if(length(x) == 0) return(NULL)
+            message(paste(Sys.time(), "reading job", id))
+            x <- system(paste("qacct -j", id, "-f", acc_file), intern = TRUE)
+            if (length(x) == 0) {
+                return(NULL)
+            }
             ## Remove leading and ending white space
             return(trimws(x))
         }
@@ -108,7 +118,7 @@ accounting_read <- function(job_ids,
 #' accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 #' if (file.exists(accounting_file)) {
 #'     accounting_info_jhpce <- accounting_read(
-#'         c('92500', '77672'),
+#'         c("92500", "77672"),
 #'         accounting_file
 #'     )
 #' }
@@ -116,10 +126,12 @@ accounting_read <- function(job_ids,
 #' ## Here we use the data included in the package to avoid depending on JHPCE
 #' ## where the data for job 77672 has been subset for the first two tasks.
 #' accounting_info <- list(
-#'     '92500' = readLines(system.file('extdata', 'accounting', '92500.txt',
-#'         package = 'sgejobs')),
-#'     '77672' = readLines(system.file('extdata', 'accounting', '77672.txt',
-#'         package = 'sgejobs'))
+#'     "92500" = readLines(system.file("extdata", "accounting", "92500.txt",
+#'         package = "sgejobs"
+#'     )),
+#'     "77672" = readLines(system.file("extdata", "accounting", "77672.txt",
+#'         package = "sgejobs"
+#'     ))
 #' )
 #'
 #' ## Here we parse the data from `qacct` into a data.frame
@@ -131,17 +143,17 @@ accounting_read <- function(job_ids,
 #'
 #' ## And the absolute maximum
 #' pryr:::show_bytes(max(res$maxvmem))
-accounting_parse <- function(accounting_info, tz = 'EST') {
+accounting_parse <- function(accounting_info, tz = "EST") {
     ## For R CMD check
     variable <- value <- NULL
     ids <- names(accounting_info)
 
     res <- purrr::map2_dfr(accounting_info, ids, function(x, i) {
-        message(paste(Sys.time(), 'processing job', i))
+        message(paste(Sys.time(), "processing job", i))
 
         ## For jobs that have more than one task (array jobs)
-        starts <- grep('=======', x)
-        ends <- c(starts[-1]-1, length(x))
+        starts <- grep("=======", x)
+        ends <- c(starts[-1] - 1, length(x))
 
         split_info <- rep(
             seq_len(length(starts)),
@@ -157,23 +169,23 @@ accounting_parse <- function(accounting_info, tz = 'EST') {
         res_int <- purrr::map(
             x_list,
             ~ data.frame(
-                variable = ss(.x[-1], '[[:space:]]+', 1),
-                value = purrr::map_chr(ss(.x[-1], '[[:space:]]+', -1), paste,
-                    collapse = ' '),
+                variable = ss(.x[-1], "[[:space:]]+", 1),
+                value = purrr::map_chr(ss(.x[-1], "[[:space:]]+", -1), paste,
+                    collapse = " "
+                ),
                 stringsAsFactors = FALSE
             )
         )
 
         ## Deal with job ids
         res_int <- purrr::map_dfr(res_int, function(x) {
-            task <- x$value[x$variable == 'taskid']
-            if(task != 'undefined') {
-                x$input_id <- paste0(i, '.', task)
+            task <- x$value[x$variable == "taskid"]
+            if (task != "undefined") {
+                x$input_id <- paste0(i, ".", task)
             } else {
                 x$input_id <- as.character(i)
             }
             return(x)
-
         })
         return(res_int)
     })
@@ -182,7 +194,7 @@ accounting_parse <- function(accounting_info, tz = 'EST') {
 
     ## Deal with the time variables
     format_time <- function(x) {
-        lubridate::parse_date_time(x, orders = 'a b! d! h!:M!:S! Y!', tz = tz)
+        lubridate::parse_date_time(x, orders = "a b! d! h!:M!:S! Y!", tz = tz)
     }
     res2$end_time <- format_time(res2$end_time)
     res2$qsub_time <- format_time(res2$qsub_time)
@@ -192,13 +204,13 @@ accounting_parse <- function(accounting_info, tz = 'EST') {
     format_mem <- function(mem) {
         power <- rep(0, length(mem))
         mem <- tolower(mem)
-        power[grepl('tb', mem)] <- 4
-        power[grepl('gb', mem)] <- 3
-        power[grepl('mb', mem)] <- 2
-        power[grepl('kb', mem)] <- 1
-        mem_num <- as.numeric(gsub('[[:alpha:]]', '', mem))
+        power[grepl("tb", mem)] <- 4
+        power[grepl("gb", mem)] <- 3
+        power[grepl("mb", mem)] <- 2
+        power[grepl("kb", mem)] <- 1
+        mem_num <- as.numeric(gsub("[[:alpha:]]", "", mem))
 
-        structure(mem_num * (1000^power), class = 'bytes')
+        structure(mem_num * (1000^power), class = "bytes")
     }
     res2$io <- format_mem(res2$io)
     res2$maxvmem <- format_mem(res2$maxvmem)

@@ -18,8 +18,8 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 ```
 
@@ -28,34 +28,34 @@ knitr::opts_chunk$set(
 startTime <- Sys.time()
 
 ## Bib setup
-library('knitcitations')
+library("knitcitations")
 
 ## Load knitcitations with a clean bibliography
 cleanbib()
-cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
+cite_options(hyperlink = "to.doc", citation_format = "text", style = "html")
 # Note links won't show for now due to the following issue
 # https://github.com/cboettig/knitcitations/issues/63
 
 ## Write bibliography information
 bib <- c(
-    sgejobs = citation('sgejobs'),
-    BiocStyle = citation('BiocStyle'),
-    glue = citation('glue'),
-    knitcitations = citation('knitcitations'),
-    knitr = citation('knitr')[3],
-    lubridate = citation('lubridate'),
-    pryr = citation('pryr'),
-    purrr = citation('purrr'),
+    sgejobs = citation("sgejobs"),
+    BiocStyle = citation("BiocStyle"),
+    glue = citation("glue"),
+    knitcitations = citation("knitcitations"),
+    knitr = citation("knitr")[3],
+    lubridate = citation("lubridate"),
+    pryr = citation("pryr"),
+    purrr = citation("purrr"),
     R = citation(),
-    readr = citation('readr'),
-    remotes = citation('remotes'),
-    rmarkdown = citation('rmarkdown')[1],
-    sessioninfo = citation('sessioninfo'),
-    testthat = citation('testthat'),
-    tidyr = citation('tidyr')
+    readr = citation("readr"),
+    remotes = citation("remotes"),
+    rmarkdown = citation("rmarkdown")[1],
+    sessioninfo = citation("sessioninfo"),
+    testthat = citation("testthat"),
+    tidyr = citation("tidyr")
 )
 
-write.bibtex(bib, file = 'basics.bib')
+write.bibtex(bib, file = "basics.bib")
 ```
 
 
@@ -66,10 +66,11 @@ write.bibtex(bib, file = 'basics.bib')
 `R` is an open-source statistical environment which can be easily modified to enhance its functionality via packages. `r Githubpkg('LieberInstitute/sgejobs')` is a `R` package available via GitHub. `R` can be installed on any operating system from [CRAN](https://cran.r-project.org/) after which you can install `r Githubpkg('LieberInstitute/sgejobs')` by using the following commands in your `R` session:
 
 ```{r 'installpkg', eval = FALSE}
-if (!requireNamespace("remotes", quietly = TRUE))
-   install.packages("remotes")
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+}
 
-remotes::install_github('LieberInstitute/sgejobs')
+remotes::install_github("LieberInstitute/sgejobs")
 ```
 
 
@@ -83,7 +84,7 @@ We hope that `r Githubpkg('LieberInstitute/sgejobs')` will be useful for your re
 
 ```{r 'citation'}
 ## Citation info
-citation('sgejobs')
+citation("sgejobs")
 ```
 
 # Overview
@@ -93,7 +94,7 @@ The package `r Githubpkg('LieberInstitute/sgejobs')` contains a few helper funct
 To start off, load the package.
 
 ```{r 'intro'}
-library('sgejobs')
+library("sgejobs")
 ```
 
 ## Creating SGE job `bash` scripts
@@ -105,18 +106,18 @@ At this point, if you are starting from stratch you might want to create a `bash
 
 ```{r 'single'}
 ## job_single() builds a template bash script for a single job
-job_single('jhpce_job', create_logdir = FALSE)
+job_single("jhpce_job", create_logdir = FALSE)
 
 ## if you specify task_num then it becomes an array job
-job_single('jhpce_array_job', create_logdir = FALSE, task_num = 20)
+job_single("jhpce_array_job", create_logdir = FALSE, task_num = 20)
 ```
 
 [`job_loop()`](../articles/job_loop.html) is a little bit more complicated since you have to specify the `loops` named list argument. The `loops` argument specifies the `bash` variable names and values to loop through for creating a series of `bash` scripts that will get submitted to SGE. This type of `bash` script is something we use frequently, for example in the [`compute_weights.sh`](https://github.com/LieberInstitute/brainseq_phase2/blob/master/twas/compute_weights.sh) script `r citep('doi.org/10.1016/j.neuron.2019.05.013')`. This type of script generator I believe is something [Alyssa Frazee](http://alyssafrazee.com/) taught me back in the day which you can see in some old repositories such as [`leekgroup/derSoftware`](https://github.com/leekgroup/derSoftware). Besides the `loops` argument, [`job_loop()`](../articles/job_loop.html) shares most of the options with [`job_single()`](../articles/job_single.html).
 
 ```{r 'loop'}
 job_loop(
-    loops = list(region = c('DLPFC', 'HIPPO'), feature = c('gene', 'exon', 'tx', 'jxn')),
-    name = 'bsp2_test'
+    loops = list(region = c("DLPFC", "HIPPO"), feature = c("gene", "exon", "tx", "jxn")),
+    name = "bsp2_test"
 )
 ```
 
@@ -130,7 +131,7 @@ To start off, [`array_submit()`](../articles/array_submit.html) can take a local
 ## This is an example true output from "qstat | grep Eqw"
 ## 7770638 0.50105 compute_we lcollado     Eqw   08/16/2019 14:57:25                                    1 225001-225007:1,225009-225017:2,225019-225038:1,225040,225043,225047,225049
 ## parse_task_ids() can then take as input the list of task ids that failed
-task_ids <- parse_task_ids('225001-225007:1,225009-225017:2,225019-225038:1,225040,225043,225047,225049')
+task_ids <- parse_task_ids("225001-225007:1,225009-225017:2,225019-225038:1,225040,225043,225047,225049")
 task_ids
 ```
 
@@ -138,7 +139,7 @@ Next, you can re-submit those task ids for the given SGE `bash` script that fail
 
 ```{r 're-submit'}
 ## Choose a script name
-job_name <- paste0('array_submit_example_', Sys.Date())
+job_name <- paste0("array_submit_example_", Sys.Date())
 
 ## Create an array job on the temporary directory
 with_wd(tempdir(), {
@@ -151,11 +152,10 @@ with_wd(tempdir(), {
 
     ## Now we can submit the SGE job for a set of task IDs
     array_submit(
-        job_bash = paste0(job_name, '.sh'),
+        job_bash = paste0(job_name, ".sh"),
         task_ids = task_ids,
         submit = FALSE
     )
-
 })
 ```
 
@@ -163,7 +163,7 @@ Another scenario that you might run when submitting SGE array jobs is that there
 
 ```{r 'array_submit_num'}
 ## Choose a script name
-job_name <- paste0('array_submit_num_example_', Sys.Date())
+job_name <- paste0("array_submit_num_example_", Sys.Date())
 
 ## Create an array job on the temporary directory
 with_wd(tempdir(), {
@@ -176,11 +176,10 @@ with_wd(tempdir(), {
 
     ## Now we can submit the SGE job for a given number of tasks
     array_submit_num(
-        job_bash = paste0(job_name, '.sh'),
+        job_bash = paste0(job_name, ".sh"),
         array_num = 150000,
         submit = FALSE
     )
-
 })
 ```
 
@@ -191,7 +190,7 @@ If you built your SGE job `bash` scripts using the functions from this package, 
 
 ```{r 'loginfo'}
 ## Example log file
-bsp2_log <- system.file('extdata', 'logs', 'delete_bsp2.txt', package = 'sgejobs')
+bsp2_log <- system.file("extdata", "logs", "delete_bsp2.txt", package = "sgejobs")
 
 ## Find start/end dates
 log_date(bsp2_log)
@@ -206,9 +205,11 @@ In any case, once you have the SGE job id (be it an array job or not), you can e
 
 ```{r 'accounting'}
 ## If you are at JHPCE you can run this:
-if(FALSE) {
-  accounting(c('92500', '77672'),
-      '/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt')
+if (FALSE) {
+    accounting(
+        c("92500", "77672"),
+        "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
+    )
 }
 
 ## However, if you are not at JHPCE, we included some example data
@@ -216,10 +217,12 @@ if(FALSE) {
 # Here we use the data included in the package to avoid depending on JHPCE
 ## where the data for job 77672 has been subset for the first two tasks.
 accounting_info <- list(
-    '92500' = readLines(system.file('extdata', 'accounting', '92500.txt',
-        package = 'sgejobs')),
-    '77672' = readLines(system.file('extdata', 'accounting', '77672.txt',
-        package = 'sgejobs'))
+    "92500" = readLines(system.file("extdata", "accounting", "92500.txt",
+        package = "sgejobs"
+    )),
+    "77672" = readLines(system.file("extdata", "accounting", "77672.txt",
+        package = "sgejobs"
+    ))
 )
 
 ## Here we parse the data from `qacct` into a data.frame
@@ -268,12 +271,12 @@ Code for creating the vignette
 
 ```{r createVignette, eval=FALSE}
 ## Create the vignette
-library('rmarkdown')
-system.time(render('sgejobs-quickstart.Rmd', 'BiocStyle::html_document'))
+library("rmarkdown")
+system.time(render("sgejobs-quickstart.Rmd", "BiocStyle::html_document"))
 
 ## Extract the R code
-library('knitr')
-knit('sgejobs-quickstart.Rmd', tangle = TRUE)
+library("knitr")
+knit("sgejobs-quickstart.Rmd", tangle = TRUE)
 ```
 
 Date the vignette was generated.
@@ -288,14 +291,14 @@ Wallclock time spent generating the vignette.
 ```{r reproduce2, echo=FALSE}
 ## Processing time in seconds
 totalTime <- diff(c(startTime, Sys.time()))
-round(totalTime, digits=3)
+round(totalTime, digits = 3)
 ```
 
 `R` session information.
 
 ```{r reproduce3, echo=FALSE}
 ## Session info
-library('sessioninfo')
+library("sessioninfo")
 options(width = 120)
 session_info()
 ```

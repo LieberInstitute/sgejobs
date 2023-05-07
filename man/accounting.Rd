@@ -49,39 +49,45 @@ information recorded by SGE on the performance of these SGE jobs.
 accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 if (file.exists(accounting_file)) {
     head(
-        accounting(c('92500', '77672'),
-        accounting_file)
+        accounting(
+            c("92500", "77672"),
+            accounting_file
+        )
     )
 }
 ## Example for a single job
-acc_info <- list('92500' = readLines(
-    system.file('extdata', 'accounting', '92500.txt',
-    package = 'sgejobs')))
+acc_info <- list("92500" = readLines(
+    system.file("extdata", "accounting", "92500.txt",
+        package = "sgejobs"
+    )
+))
 acc_info
 
 ## Requires JHPCE access
 accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 if (file.exists(accounting_file)) {
-    acc_info_jhpce <- accounting_read('92500', accounting_file)
+    acc_info_jhpce <- accounting_read("92500", accounting_file)
     identical(acc_info_jhpce, acc_info)
 }
 
 ## The example file has been subset to just the first two tasks
-acc_info_array <- list('77672' = readLines(
-    system.file('extdata', 'accounting', '77672.txt',
-    package = 'sgejobs')))
+acc_info_array <- list("77672" = readLines(
+    system.file("extdata", "accounting", "77672.txt",
+        package = "sgejobs"
+    )
+))
 
 ## Requires JHPCE access
 #' ## Example for an array job
 if (file.exists(accounting_file)) {
-    acc_info_jhpce_array <- accounting_read('77672', accounting_file)
+    acc_info_jhpce_array <- accounting_read("77672", accounting_file)
 }
 
 ## Requires JHPCE access
 accounting_file <- "/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"
 if (file.exists(accounting_file)) {
     accounting_info_jhpce <- accounting_read(
-        c('92500', '77672'),
+        c("92500", "77672"),
         accounting_file
     )
 }
@@ -89,10 +95,12 @@ if (file.exists(accounting_file)) {
 ## Here we use the data included in the package to avoid depending on JHPCE
 ## where the data for job 77672 has been subset for the first two tasks.
 accounting_info <- list(
-    '92500' = readLines(system.file('extdata', 'accounting', '92500.txt',
-        package = 'sgejobs')),
-    '77672' = readLines(system.file('extdata', 'accounting', '77672.txt',
-        package = 'sgejobs'))
+    "92500" = readLines(system.file("extdata", "accounting", "92500.txt",
+        package = "sgejobs"
+    )),
+    "77672" = readLines(system.file("extdata", "accounting", "77672.txt",
+        package = "sgejobs"
+    ))
 )
 
 ## Here we parse the data from `qacct` into a data.frame

@@ -15,8 +15,8 @@
 #'
 #' ## Create a directory called 'hola' and then check that it exists
 #' with_wd(tempdir(), {
-#'     dir.create('hola', showWarnings = FALSE)
-#'     file.exists('hola')
+#'     dir.create("hola", showWarnings = FALSE)
+#'     file.exists("hola")
 #' })
 #'
 with_wd <- function(dir, expr) {
