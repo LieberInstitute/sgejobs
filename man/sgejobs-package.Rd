@@ -6,9 +6,7 @@
 \alias{sgejobs-package}
 \title{sgejobs: Helper functions for SGE jobs at JHPCE}
 \description{
-This package contains helper functions for interacting with the
-    JHPCE cluster https://jhpce.jhu.edu/ which is uses Son of Grid Engine (SGE)
-    for managing the cluster jobs.
+This package contains helper functions for interacting with the JHPCE cluster https://jhpce.jhu.edu/ which is uses Son of Grid Engine (SGE) for managing the cluster jobs.
 }
 \seealso{
 Useful links:
@@ -19,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Leonardo Collado-Torres \email{lcolladotor@gmail.com} (0000-0003-2140-308X)
+\strong{Maintainer}: Leonardo Collado-Torres \email{lcolladotor@gmail.com} (\href{https://orcid.org/0000-0003-2140-308X}{ORCID})
 
 }
 \keyword{internal}

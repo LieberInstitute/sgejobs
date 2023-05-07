@@ -4,7 +4,13 @@
 \alias{array_submit}
 \title{Submit an array job with a specified set of task IDs}
 \usage{
-array_submit(job_bash, task_ids, submit = !is_travis(), restore = TRUE)
+array_submit(
+  job_bash,
+  task_ids,
+  submit =
+    file.exists("/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"),
+  restore = TRUE
+)
 }
 \arguments{
 \item{job_bash}{A \code{character(1)} vector with the name of a bash script
@@ -25,7 +31,7 @@ The path to \code{job_bash}.
 Given a bash script that specifies the SGE option -t (that is, an array job),
 this function submits that job using \code{qsub} for a given list of task
 IDs. This function is useful in case some tasks for a given job failed which
-you can find using \code{qstat | grep Eqw} or other options.
+you can find using \verb{qstat | grep Eqw} or other options.
 }
 \examples{
 

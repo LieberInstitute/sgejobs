@@ -5,8 +5,14 @@
 \alias{task_ids_num}
 \title{Submit an array job for a given number of tasks}
 \usage{
-array_submit_num(job_bash, array_num, submit = !is_travis(),
-  restore = TRUE, array_max = 75000L)
+array_submit_num(
+  job_bash,
+  array_num,
+  submit =
+    file.exists("/cm/shared/apps/sge/sge-8.1.9/default/common/accounting_20191007_0300.txt"),
+  restore = TRUE,
+  array_max = 75000L
+)
 
 task_ids_num(array_num, array_max = 75000L)
 }

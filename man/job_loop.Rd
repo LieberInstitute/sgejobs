@@ -4,9 +4,19 @@
 \alias{job_loop}
 \title{Build a bash script that loops over variables and submits SGE jobs}
 \usage{
-job_loop(loops, name, create_shell = FALSE, queue = "shared",
-  memory = "10G", cores = 1L, email = "e", logdir = "logs",
-  filesize = "100G", task_num = NULL, tc = 20)
+job_loop(
+  loops,
+  name,
+  create_shell = FALSE,
+  queue = "shared",
+  memory = "10G",
+  cores = 1L,
+  email = "e",
+  logdir = "logs",
+  filesize = "100G",
+  task_num = NULL,
+  tc = 20
+)
 }
 \arguments{
 \item{loops}{A named \code{list} where each of the elements are character vectors.
@@ -20,7 +30,7 @@ will be replaced by underscores.}
 shell file for the script.}
 
 \item{queue}{A \code{character(1)} vector with the name of the SGE queue. Check
-how busy a given queue is by running \code{qpic -q queuename}.}
+how busy a given queue is by running \verb{qpic -q queuename}.}
 
 \item{memory}{The amount of memory per core to request in SGE syntax. You
 can check how much a current job is utilizing using the \code{qmem} JHPCE command.

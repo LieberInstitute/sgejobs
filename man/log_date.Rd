@@ -4,8 +4,7 @@
 \alias{log_date}
 \title{From a SGE log file, find the SGE start and end times}
 \usage{
-log_date(log_file, tz = "EST", date_lines = c("Job starts",
-  "Job ends"))
+log_date(log_file, tz = "EST", date_lines = c("Job starts", "Job ends"))
 }
 \arguments{
 \item{log_file}{The path to a SGE log file.}

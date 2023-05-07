@@ -4,11 +4,20 @@
 \alias{job_single}
 \title{Build a SGE job bash script}
 \usage{
-job_single(name, create_shell = FALSE, queue = "shared",
-  memory = "10G", cores = 1L, email = "e", logdir = "logs",
-  filesize = "100G", task_num = NULL, tc = 20,
+job_single(
+  name,
+  create_shell = FALSE,
+  queue = "shared",
+  memory = "10G",
+  cores = 1L,
+  email = "e",
+  logdir = "logs",
+  filesize = "100G",
+  task_num = NULL,
+  tc = 20,
   command = "Rscript -e \\"options(width = 120); sessioninfo::session_info()\\"",
-  create_logdir = TRUE)
+  create_logdir = TRUE
+)
 }
 \arguments{
 \item{name}{A \code{character(1)} vector with the name of the script. Any spaces
@@ -18,7 +27,7 @@ will be replaced by underscores.}
 shell file for the script.}
 
 \item{queue}{A \code{character(1)} vector with the name of the SGE queue. Check
-how busy a given queue is by running \code{qpic -q queuename}.}
+how busy a given queue is by running \verb{qpic -q queuename}.}
 
 \item{memory}{The amount of memory per core to request in SGE syntax. You
 can check how much a current job is utilizing using the \code{qmem} JHPCE command.
