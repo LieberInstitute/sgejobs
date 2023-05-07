@@ -11,7 +11,8 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Helper functions for SGE jobs at JHPCE">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Helper functions for SGE jobs at JHPCE">
 <meta property="og:description" content="This package contains helper functions for interacting with the
     JHPCE cluster https://jhpce.jhu.edu/ which is uses Son of Grid Engine (SGE)
     for managing the cluster jobs.">
@@ -79,37 +80,29 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
 <div class="section level1">
 <div class="page-header"><h1 id="sgejobs">sgejobs<a class="anchor" aria-label="anchor" href="#sgejobs"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p>This package contains helper functions for <a href="https://arc.liv.ac.uk/trac/SGE" class="external-link">Son of Grid Engine</a> (SGE) cluster jobs, mostly with usage at the Joint High Performance Computing Exchange (<a href="https://jhpce.jhu.edu/" class="external-link">JHPCE</a>) cluster in mind. Please check the package <a href="http://LieberInstitute.github.io/sgejobs" class="external-link">documentation website</a> for more information about how to use <code>sgejobs</code>.</p>
-</div>
-<div class="section level1">
-<h1 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
-</h1>
-<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>sgejobs</code> using the following code:</p>
+<div class="section level2">
+<h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+</h2>
+<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>sgejobs</code> from <a href="https://github.com/LieberInstitute/sgejobs" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## If needed:</span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co">## Install with:</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"LieberInstitute/sgejobs"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"LieberInstitute/sgejobs"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h1>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <p>Below is the citation output from using <code>citation('sgejobs')</code> in R. Please run this yourself to check for any updates on how to cite <strong>sgejobs</strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"sgejobs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"sgejobs"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite package 'sgejobs' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Collado-Torres L (2019). _sgejobs: Helper functions for SGE jobs at</span></span>
-<span><span class="co">#&gt;   JHPCE_. R package version 0.99.1,</span></span>
+<span><span class="co">#&gt;   Collado-Torres L (2023). _sgejobs: Helper functions for SGE jobs at</span></span>
+<span><span class="co">#&gt;   JHPCE_. R package version 0.99.2,</span></span>
 <span><span class="co">#&gt;   &lt;https://github.com/LieberInstitute/sgejobs&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
@@ -117,17 +110,31 @@
 <span><span class="co">#&gt;   @Manual{,</span></span>
 <span><span class="co">#&gt;     title = {sgejobs: Helper functions for SGE jobs at JHPCE},</span></span>
 <span><span class="co">#&gt;     author = {Leonardo Collado-Torres},</span></span>
-<span><span class="co">#&gt;     year = {2019},</span></span>
-<span><span class="co">#&gt;     note = {R package version 0.99.1},</span></span>
+<span><span class="co">#&gt;     year = {2023},</span></span>
+<span><span class="co">#&gt;     note = {R package version 0.99.2},</span></span>
 <span><span class="co">#&gt;     url = {https://github.com/LieberInstitute/sgejobs},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
+<p>Please note that the <code>sgejobs</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
 </div>
-<div class="section level1">
-<h1 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
-</h1>
-<p>Testing on Bioc-devel is feasible thanks to <a href="http://docs.travis-ci.com/user/languages/r/" class="external-link">R Travis</a>.</p>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the <code>sgejobs</code> project is released with a <a href="http://bioconductor.org/about/code-of-conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
-
+<div class="section level2">
+<h2 id="development-tools">Development tools<a class="anchor" aria-label="anchor" href="#development-tools"></a>
+</h2>
+<ul>
+<li>Continuous code testing is possible thanks to <a href="https://www.tidyverse.org/blog/2020/04/usethis-1-6-0/" class="external-link">GitHub actions</a> through <em><a href="https://CRAN.R-project.org/package=usethis" class="external-link">usethis</a></em>, <em><a href="https://CRAN.R-project.org/package=remotes" class="external-link">remotes</a></em>, and <em><a href="https://CRAN.R-project.org/package=rcmdcheck" class="external-link">rcmdcheck</a></em> customized to use <a href="https://www.bioconductor.org/help/docker/" class="external-link">Bioconductor’s docker containers</a> and <em><a href="https://bioconductor.org/packages/3.17/BiocCheck" class="external-link">BiocCheck</a></em>.</li>
+<li>Code coverage assessment is possible thanks to <a href="https://codecov.io/gh" class="external-link">codecov</a> and <em><a href="https://CRAN.R-project.org/package=covr" class="external-link">covr</a></em>.</li>
+<li>The <a href="http://LieberInstitute.github.io/sgejobs" class="external-link">documentation website</a> is automatically updated thanks to <em><a href="https://CRAN.R-project.org/package=pkgdown" class="external-link">pkgdown</a></em>.</li>
+<li>The code is styled automatically thanks to <em><a href="https://CRAN.R-project.org/package=styler" class="external-link">styler</a></em>.</li>
+<li>The documentation is formatted thanks to <em><a href="https://CRAN.R-project.org/package=devtools" class="external-link">devtools</a></em> and <em><a href="https://CRAN.R-project.org/package=roxygen2" class="external-link">roxygen2</a></em>.</li>
+</ul>
+<p>For more details, check the <code>dev</code> directory.</p>
+<p>This package was developed using <em><a href="https://bioconductor.org/packages/3.17/biocthis" class="external-link">biocthis</a></em>.</p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -150,6 +157,7 @@
 <h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+<li><a href="SUPPORT.html">Getting help</a></li>
 </ul>
 </div>
 
@@ -170,9 +178,11 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/LieberInstitute/sgejobs" class="external-link"><img src="https://travis-ci.org/LieberInstitute/sgejobs.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://codecov.io/gh/LieberInstitute/sgejobs?branch=master" class="external-link"><img src="https://codecov.io/gh/LieberInstitute/sgejobs/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://codecov.io/gh/LieberInstitute/sgejobs?branch=devel" class="external-link"><img src="https://codecov.io/gh/LieberInstitute/sgejobs/branch/devel/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/LieberInstitute/sgejobs/actions" class="external-link"><img src="https://github.com/LieberInstitute/sgejobs/workflows/R-CMD-check-bioc/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/LieberInstitute/sgejobs/issues" class="external-link"><img src="https://img.shields.io/github/issues/LieberInstitute/sgejobs" alt="GitHub issues"></a></li>
+<li><a href="https://github.com/LieberInstitute/sgejobs/pulls" class="external-link"><img src="https://img.shields.io/github/issues-pr/LieberInstitute/sgejobs" alt="GitHub pulls"></a></li>
 </ul>
 </div>
 
