@@ -2,8 +2,8 @@ context("accounting")
 
 ## Can't really test these functions on Travis since it depends on `qacct`
 test_that("accouting_read", {
-    expect_error(accounting_read("92500"), "error in running command")
-    expect_error(accounting("92500"), "error in running command")
+    expect_error(accounting_read("92500"))
+    expect_error(accounting("92500"))
 })
 
 accounting_info <- list(
