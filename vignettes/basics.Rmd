@@ -227,7 +227,7 @@ res <- accounting_parse(accounting_info)
 res
 
 ## Check the maximum memory use
-res$maxvmem
+as.numeric(res$maxvmem)
 
 ## The minimum memory (from the maxvmem) used
 pryr:::show_bytes(min(res$maxvmem))
