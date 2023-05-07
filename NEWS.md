@@ -1,3 +1,9 @@
+# sgejobs 0.99.2
+
+SIGNIFICANT USER-VISIBLE CHANGES
+
+* Removed `is_travis()` since now all code is tested at GitHub Actions.
+
 # sgejobs 0.99.1
 
 * Add the `accounting_files` parameter to the `accounting()` family of

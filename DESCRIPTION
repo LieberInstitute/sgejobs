@@ -1,7 +1,7 @@
 Package: sgejobs
 Title: Helper functions for SGE jobs at JHPCE
-Version: 0.99.1
-Date: 2019-11-07
+Version: 0.99.2
+Date: 2023-05-06
 Authors@R: 
     c(
         person(
